@@ -1,0 +1,45 @@
+{
+  "name": "expense_tracker",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "@chakra-ui/icons": "^1.1.1",
+    "@chakra-ui/react": "^1.7.2",
+    "@emotion/react": "^11.7.0",
+    "@emotion/styled": "^11.6.0",
+    "axios": "^0.24.0",
+    "currency.js": "^2.0.4",
+    "formik": "^2.2.9",
+    "framer-motion": "^5.4.4",
+    "hover.css": "^2.3.2",
+    "jspdf": "^2.4.0",
+    "jspdf-autotable": "^3.5.23",
+    "lodash": "^4.17.21",
+    "mongodb": "^4.2.1",
+    "next": "^12.0.7",
+    "nprogress": "^0.2.0",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
+    "react-icons": "^4.3.1",
+    "react-loader-spinner": "^4.0.0",
+    "react-paginate": "^8.0.3",
+    "react-toastify": "^8.1.0",
+    "sweetalert2": "^11.3.0",
+    "sweetalert2-react-content": "^4.2.0",
+    "swr": "^1.1.0",
+    "valtio": "^1.2.7",
+    "yup": "^0.32.11"
+  },
+  "devDependencies": {
+    "eslint": "^8.4.1",
+    "eslint-config-next": "^12.0.7",
+    "eslint-plugin-valtio": "^0.4.1",
+    "yarn-upgrade-all": "^0.5.4"
+  }
+}
