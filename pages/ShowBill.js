@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import useSWR from "swr";
 import ShowBills from "../components/bill/ShowBills";
 import { HD, MySkeletons, Title } from "../components/comUtil/ComUtil";
@@ -10,16 +10,12 @@ export default function ShowBill({ bill }) {
 
 
 
-  const { data, error } = useSWR("/api/bill", {
-    initialData: bill,
-    revalidateOnMount: true,
-  });
 
-  if (error) return <Title title="Something went wrong, please try again" />;
-  if (!data) return <MySkeletons />;
+  useEffect(() => {
+    state.bill = bill.sort((a, b) => (a.bill_date > b.bill_date ? 1 : -1));
+ 
+  }, [bill])
 
-
-  state.bill = data.data.sort((a, b) => (a.bill_date > b.bill_date ? 1 : -1));
   return (
     <>
       <HD text="Show Bills" />
@@ -30,7 +26,7 @@ export default function ShowBill({ bill }) {
     </>
   );
 }
-export async function getStaticProps() {
+export async function getServerSideProps() {
   const { db } = await connectToDatabase();
   const data = await db.collection("bill").find({}).toArray();
   

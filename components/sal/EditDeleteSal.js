@@ -28,26 +28,22 @@ export default function EditDeleteSal({ sal, emp }) {
     } = sal;
 
     async function editSalary(values) {
-       await handlePut({ values, url: "sal/update", router });
-        router.back();
+      await handlePut({ values, url: "sal/update", router });
+      router.back();
     }
 
-
-
-     
-
-      async function FormDeleteFunc() {
-        await handleFormDelete({
-          deleteUrl: "sal/del",
-          id: _id,
-          handleDelete,
-          router,
-        });
-      }
+    async function FormDeleteFunc() {
+      await handleFormDelete({
+        deleteUrl: "sal/del",
+        id: _id,
+        handleDelete,
+        router,
+      });
+    }
 
     return (
       <>
-        <Title title={` Add Salary for ${emp} `} mt="3%" />
+        <Title title={` Edit ${emp}'s salary `} mt="3%" />
 
         <Formik
           initialValues={{
@@ -61,7 +57,6 @@ export default function EditDeleteSal({ sal, emp }) {
           onSubmit={async (values, actions) => {
             await editSalary(values);
             actions.setSubmitting(false);
-           
           }}
           validationSchema={salaryValidationSchema}
         >
@@ -117,8 +112,12 @@ export default function EditDeleteSal({ sal, emp }) {
                     <CustomTextArea fieldName="sal_notes" labelName="Notes" />
                   </Wrap>
                 </Center>
-                <FormBottomButton router={router} props={props} deleteBtn
-    deleteFunc={FormDeleteFunc}/>
+                <FormBottomButton
+                  router={router}
+                  props={props}
+                  deleteBtn
+                  deleteFunc={FormDeleteFunc}
+                />
               </Form>
             );
           }}

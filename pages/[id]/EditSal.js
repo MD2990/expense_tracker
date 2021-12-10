@@ -1,7 +1,15 @@
 import { useRouter } from "next/dist/client/router";
-import React from "react";
-import { HD, MySkeletons, Spans } from "../../components/comUtil/ComUtil";
+import React, { useEffect } from "react";
+import useSWR from "swr";
+import { useSnapshot } from "valtio";
+import {
+  HD,
+  MySkeletons,
+  Spans,
+  Title,
+} from "../../components/comUtil/ComUtil";
 import EditDeleteSal from "../../components/sal/EditDeleteSal";
+import state from "../../components/store";
 import { convertToNumber, getItem } from "../../lib/helpers";
 import { jsonify } from "../../utils/dbConnect";
 import connectToDatabase from "../../utils/mongodb";
@@ -10,7 +18,9 @@ const mongodb = require("mongodb");
 export default function EditSal({ sal }) {
   const router = useRouter();
 
-  if (router.isFallback) {
+
+
+  if (router.isFallback || !state.sal) {
     return <MySkeletons />;
   }
 
@@ -21,7 +31,7 @@ export default function EditSal({ sal }) {
     </>
   );
 }
-export async function getStaticProps({ params }) {
+export async function getServerSideProps ({ params }) {
   const { db } = await connectToDatabase();
   const data = await db
     .collection("sal")
@@ -47,10 +57,10 @@ export async function getStaticProps({ params }) {
     props: {
       sal,
     },
-    revalidate: 1,
+  //  revalidate: 1,
   };
 }
-export async function getStaticPaths() {
+/* export async function getStaticPaths() {
   const { db } = await connectToDatabase();
   const data = await db.collection("sal").find({}).toArray();
 
@@ -62,3 +72,4 @@ export async function getStaticPaths() {
   // { fallback: false } means other routes should 404.
   return { paths, fallback: true };
 }
+ */

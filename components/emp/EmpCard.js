@@ -17,9 +17,13 @@ export default function EmpCard() {
     [snap.PER_PAGE, snap.offset, snap.searchResults]
   );
 
+
   useEffect(() => {
+    
     rs();
-  }, [snap.emp, rs]);
+  }, [snap.emp, rs, ]);
+ 
+
 
   if (!snap.emp) return <MySkeletons />;
   if (snap.searchResults.length < 1)

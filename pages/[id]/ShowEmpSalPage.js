@@ -1,7 +1,9 @@
 import { useRouter } from "next/router";
 import React from "react";
-import { HD, MySkeletons } from "../../components/comUtil/ComUtil";
+import useSWR from "swr";
+import { HD, MySkeletons, Title } from "../../components/comUtil/ComUtil";
 import ShowEmpSal from "../../components/sal/ShowEmpSal";
+import state from "../../components/store";
 import { getItem } from "../../lib/helpers";
 import { jsonify } from "../../utils/dbConnect";
 
@@ -25,7 +27,7 @@ export default function ShowEmpSalPage({ sal }) {
     </>
   );
 }
-export async function getStaticProps({ params }) {
+export async function getServerSideProps({ params }) {
   const { db } = await connectToDatabase();
   const data = await db
     .collection("sal")
@@ -46,19 +48,9 @@ export async function getStaticProps({ params }) {
     props: {
       sal,
     },
-    revalidate: 1,
   };
 }
 
-export async function getStaticPaths() {
-  const { db } = await connectToDatabase();
-  const data = await db.collection("sal").find({}).toArray();
 
-  // Get the paths we want to pre-render based on posts
-  const paths = data.map((c) => ({
-    params: { id: c._id.toString() },
-  }));
-  // We'll pre-render only these paths at build time.
-  // { fallback: false } means other routes should 404.
-  return { paths, fallback: true };
-}
+
+ 

@@ -67,7 +67,7 @@ export default function Edit_Delete_Exp({ exp }) {
 
         return (
           <Form>
-            <Title title={_id.substring(16)} />
+            <Title title={`Edit Expense No. ${_id.substring(16)}`} />
             <Center>
               <Wrap
                 maxW="55rem"
