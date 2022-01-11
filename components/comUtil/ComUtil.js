@@ -19,7 +19,6 @@ import {
   Textarea,
   WrapItem,
 } from "@chakra-ui/react";
-import Loader from "react-loader-spinner";
 import { toast } from "react-toastify";
 import { CalendarIcon } from "@chakra-ui/icons";
 import Head from "next/head";
@@ -62,19 +61,7 @@ export function Title({ title, mt = "8%", children }) {
   );
 }
 
-export function Loaders({ type = "Puff" }) {
-  return (
-    <Center marginTop="15%">
-      <Loader
-        type={type}
-        color="#1e81b0"
-        height={100}
-        width={100}
-        timeout={10000} //3 secs
-      />
-    </Center>
-  );
-}
+
 
 export function PrintBtn({ click }) {
   return (

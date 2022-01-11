@@ -22,7 +22,6 @@ export const BillButtons = () => {
 
   const clear = () => {
     state.searchTerm = "";
-   
     state.paymentText = "Filleter by Payment";
   };
 
