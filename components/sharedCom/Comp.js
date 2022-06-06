@@ -16,7 +16,9 @@ export const BackButton = ({ ml = "0", mr = "0", mt = "0", mb = "0" }) => {
     <Button
       className="hvr hvr-backward"
       size="lg"
-   
+      fontSize={["xx-small", "md", "lg", "xl"]}
+      maxH={["2rem", "4rem", "8rem", "12rem"]}
+      maxW={["2rem", "4rem", "8rem", "12rem"]}
       colorScheme="gray"
       color
       borderColor={color}
@@ -27,8 +29,7 @@ export const BackButton = ({ ml = "0", mr = "0", mt = "0", mb = "0" }) => {
       leftIcon={
         <ArrowBackIcon
           className="hvr hvr-backward"
-          w="1.5rem"
-          h="1.5rem"
+      
           color
         />
       }

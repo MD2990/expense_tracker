@@ -1,28 +1,22 @@
-import React, { useEffect } from "react";
-import useSWR from "swr";
+import React from "react";
 import ShowBills from "../components/bill/ShowBills";
-import { HD, MySkeletons, Title } from "../components/comUtil/ComUtil";
-import state from "../components/store";
+import { HD, MySkeletons } from "../components/comUtil/ComUtil";
 import { jsonify } from "../utils/dbConnect";
 import connectToDatabase from "../utils/mongodb";
 
 export default function ShowBill({ bill }) {
 
 
+  if (!bill) return <MySkeletons />; 
 
-
-  useEffect(() => {
-    state.bill = bill.sort((a, b) => (a.bill_date > b.bill_date ? 1 : -1));
- 
-  }, [bill])
 
   return (
     <>
       <HD text="Show Bills" />
 
-      <ShowBills
+      <ShowBills bill={bill} />
        
-      />
+    
     </>
   );
 }

@@ -4,7 +4,9 @@ import React from 'react'
 export default function TotalText({ text }) {
   return (
     <Text
-      fontSize={["md", "lg", "xl", "3xl"]}
+      fontSize={["xx-small", "md", "lg", "xl"]}
+      maxH={["2rem", "4rem", "8rem", "12rem"]}
+      maxW={["2rem", "4rem", "8rem", "12rem"]}
       fontWeight="bold"
       fontFamily="Times"
       color="gray.400"

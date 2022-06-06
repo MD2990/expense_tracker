@@ -2,6 +2,7 @@ import React from "react";
 import { Center, Box, VStack } from "@chakra-ui/layout";
 import { Field } from "formik";
 import colors from "../../lib/constants";
+import { useRouter } from "next/router";
 
 import {
   Button,
@@ -20,8 +21,9 @@ import {
   WrapItem,
 } from "@chakra-ui/react";
 import { toast } from "react-toastify";
-import { CalendarIcon } from "@chakra-ui/icons";
+import { AddIcon, CalendarIcon } from "@chakra-ui/icons";
 import Head from "next/head";
+import { BackButton } from "../sharedCom/Comp";
 
 export function HD({ text }) {
   return (
@@ -61,8 +63,6 @@ export function Title({ title, mt = "8%", children }) {
   );
 }
 
-
-
 export function PrintBtn({ click }) {
   return (
     <>
@@ -75,6 +75,9 @@ export function PrintBtn({ click }) {
         className="hvr-grow"
         onClick={() => click()}
         colorScheme="gray"
+        fontSize={["xx-small", "md", "lg", "xl"]}
+        maxH={["2rem", "4rem", "8rem", "12rem"]}
+        maxW={["2rem", "4rem", "8rem", "12rem"]}
       >
         Print
       </Button>
@@ -88,11 +91,14 @@ export function Btn({ click, title, icon, color = "blackAlpha" }) {
       _hover={{ boxShadow: "none" }}
       _focus={{ boxShadow: "none" }}
       color={color}
+      fontSize={["xx-small", "md", "lg", "xl"]}
+      maxH={["2rem", "4rem", "8rem", "12rem"]}
+      maxW={["2rem", "4rem", "8rem", "12rem"]}
       leftIcon={icon}
       className="hvr-grow"
       size="lg"
       colorScheme="gray"
-      variant="outline"
+      variant="solid"
       onClick={() => click()}
     >
       {title}
@@ -172,6 +178,7 @@ export function MySkeletons() {
 export function SearchInputField({ theValue, onChange }) {
   return (
     <Input
+      type={"search"}
       focusBorderColor="gray.400"
       mx="8"
       my="4"
@@ -265,7 +272,6 @@ export const CustomDropdown = ({ fieldName, labelName, children }) => {
               size="lg"
             >
               {children}
-              ))
             </Select>
             <FormErrorMessage>{meta.error}</FormErrorMessage>
           </FormControl>
@@ -364,5 +370,25 @@ export const CustomFieldWithValue = ({
         )}
       </Field>
     </WrapItem>
+  );
+};
+
+export const NothingFound = ({ title, link }) => {
+  const router = useRouter();
+
+  return (
+    <>
+      <Title title={title} />
+
+      <Wrap spacing="4" justify="center" align="center" m="2" p="2">
+        <WrapItem>
+          <BackButton ml="0" />
+        </WrapItem>
+
+        <WrapItem>
+          <Btn icon={<AddIcon />} click={() => router.push(link)} title="Add" />
+        </WrapItem>
+      </Wrap>
+    </>
   );
 };

@@ -5,7 +5,7 @@ import {
   TimeIcon,
   WarningTwoIcon,
 } from "@chakra-ui/icons";
-import {  Wrap, WrapItem } from "@chakra-ui/layout";
+import { Wrap, WrapItem } from "@chakra-ui/layout";
 import { useRouter } from "next/dist/client/router";
 import { useSnapshot } from "valtio";
 import { Btn, PrintBtn } from "../comUtil/ComUtil";
@@ -15,22 +15,22 @@ import { toPDF } from "../../utils/dbConnect";
 import TotalText from "../sharedCom/TotalText";
 import { BackButton } from "../sharedCom/Comp";
 
-export const BillButtons = () => {
+export const BillButtons = ({ data }) => {
   const snap = useSnapshot(state);
 
   const router = useRouter();
 
   const clear = () => {
     state.searchTerm = "";
-    state.paymentText = "Filleter by Payment";
+    state.paymentText = "Filter by Payment";
+    state.bill = data;
   };
 
-
   function getPaid() {
-    state.paid = !snap.paid;
-    const data = snap.bill.filter((b) => b.payment_status == state.paid);
+    state.bill = data;
+    state.paid = !state.paid;
+    state.bill = state.bill.filter((b) => b.payment_status !== state.paid);
 
-    state.bill = data.sort((a, b) => (a.bill_date > b.bill_date ? 1 : -1));
     snap.paid ? (state.paymentText = "Paid") : (state.paymentText = "Pending");
   }
 
@@ -82,20 +82,19 @@ export const BillButtons = () => {
       { title: "Remarks", key: "notes" },
     ];
 
-
-    
     return toPDF(rows, columns, "bill Details");
   }
   return (
-    <Wrap spacing="4" justify="center" align="center" m='2' p='2' >
+    <Wrap spacing="4" justify="center" align="center" m="2" p="2">
       <WrapItem>
         <BackButton ml="0" />
       </WrapItem>
       <WrapItem>
         <SearchInput data={snap.bill} />
       </WrapItem>
+
       <WrapItem>
-        <Btn icon={<RepeatIcon />} click={() => clear()} title="Show All" />
+        <Btn icon={<RepeatIcon />} click={clear} title="Show All" />
       </WrapItem>
       <WrapItem>
         <Btn
@@ -104,10 +103,12 @@ export const BillButtons = () => {
           title="Add"
         />
       </WrapItem>
+      {snap.searchResults.length > 0 && (
+        <WrapItem>
+          <PrintBtn click={() => printPdf()} />
+        </WrapItem>
+      )}
 
-      <WrapItem>
-        <PrintBtn click={() => printPdf()} />
-      </WrapItem>
       <WrapItem>
         <Btn
           title={snap.paymentText}
@@ -116,16 +117,14 @@ export const BillButtons = () => {
               <CheckCircleIcon />
             ) : snap.paymentText == "Pending" ? (
               <WarningTwoIcon />
-            ) : (
-              <TimeIcon />
-            )
+            ) : null
           }
           color={
             snap.paymentText == "Paid"
               ? "turquoise"
               : snap.paymentText == "Pending" && "red.400"
           }
-          click={() => getPaid()}
+          click={getPaid}
         />
       </WrapItem>
 
