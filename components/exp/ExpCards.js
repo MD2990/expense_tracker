@@ -23,7 +23,7 @@ export default function ExpCards() {
   }, [snap.exp, rs]);
 
   if (!snap.exp) return <MySkeletons />;
-  if (!snap.exp) return <Title title="No exps Added Yet " />;
+  if (snap.exp.length < 1) return <Title title="No Expenses Added Yet " />;
   return (
     <>
       {rs()?.map(
@@ -40,6 +40,7 @@ export default function ExpCards() {
           return (
             <Wrap key={_id} justify="center" spacing="4">
               <SingleCard
+              
                 link={`/${_id}/EditExp`}
                 header={_id.substring(16)}
                 deleteFunction={async () => {
@@ -47,11 +48,12 @@ export default function ExpCards() {
                     deleteUrl: "exp/del",
                     id: _id,
                     handleDelete,
-                  
-                    secondDelete: () =>
-                      (state.exp = snap.exp.filter((item) => item._id !== _id)),
-                   
                   });
+
+                  if (state.isDeleted) {
+                    state.exp = snap.exp.filter((item) => item._id !== _id);
+                  }
+                  state.isDeleted = false;
                 }}
               >
                 <AllText title=" Daily Sell:" data={day_sell} />

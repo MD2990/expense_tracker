@@ -12,7 +12,9 @@ export default function Paginate() {
     state.currentPage = selectedPage;
   }
 
-  useEffect(() => (state.currentPage = 0), [snap.searchResults]);
+  useEffect(() => {
+    state.currentPage = 0;
+  }, [snap.searchResults]);
   return (
     snap.searchResults.length > 0 && (
       <ReactPaginate

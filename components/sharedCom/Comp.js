@@ -17,8 +17,8 @@ export const BackButton = ({ ml = "0", mr = "0", mt = "0", mb = "0" }) => {
       className="hvr hvr-backward"
       size="lg"
       fontSize={["xx-small", "md", "lg", "xl"]}
-      maxH={["2rem", "4rem", "8rem", "12rem"]}
-      maxW={["2rem", "4rem", "8rem", "12rem"]}
+      p={["1", "2", "3", "4"]}
+      h={["1.5rem", "2rem", "2.5rem", "3rem"]}
       colorScheme="gray"
       color
       borderColor={color}
@@ -26,13 +26,7 @@ export const BackButton = ({ ml = "0", mr = "0", mt = "0", mb = "0" }) => {
       mt={mt}
       mb={mb}
       mr={mr}
-      leftIcon={
-        <ArrowBackIcon
-          className="hvr hvr-backward"
-      
-          color
-        />
-      }
+      leftIcon={<ArrowBackIcon className="hvr hvr-backward" color />}
       onClick={() => router.back()}
     >
       Back

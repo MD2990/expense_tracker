@@ -92,6 +92,7 @@ export default function AddExps() {
                   fieldName="exp_date"
                   labelName="Date"
                   type="date"
+                  
                 />
                 <CustomTextArea fieldName="notes" labelName="Notes" />
               </Wrap>

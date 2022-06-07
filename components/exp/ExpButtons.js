@@ -1,7 +1,4 @@
-import {
-  AddIcon,
-  RepeatIcon,
-} from "@chakra-ui/icons";
+import { AddIcon, RepeatIcon } from "@chakra-ui/icons";
 import { Wrap, WrapItem } from "@chakra-ui/layout";
 import { useRouter } from "next/dist/client/router";
 import { useSnapshot } from "valtio";
@@ -10,7 +7,7 @@ import { Btn, PrintBtn } from "../comUtil/ComUtil";
 import SearchInput from "../comUtil/SearchInput";
 import TotalText from "../sharedCom/TotalText";
 import state from "../store";
-import {BackButton} from "../sharedCom/Comp";
+import { BackButton } from "../sharedCom/Comp";
 
 export const ExpButtons = () => {
   const snap = useSnapshot(state);
@@ -72,11 +69,10 @@ export const ExpButtons = () => {
     return toPDF(rows, columns, "exp Details");
   }
   return (
-    <Wrap spacing="4" justify="center" align="center" p='2' m='2' >
+    <Wrap spacing="4" justify="center" align="center" p="2" m="2">
       <WrapItem>
-        <BackButton/>
+        <BackButton />
       </WrapItem>
-
       <WrapItem>
         <SearchInput data={snap.exp} />
       </WrapItem>
@@ -90,19 +86,22 @@ export const ExpButtons = () => {
           title="Add New"
         />
       </WrapItem>
-
-      <WrapItem>
-        <PrintBtn click={() => printPdf()} />
-      </WrapItem>
-
-      {snap.searchTerm.trim() != "" && (
+      {snap.searchResults.length > 0 && (
         <WrapItem>
-          <TotalText text={`${snap.searchResults.length} of`} />
+          <PrintBtn click={() => printPdf()} />
         </WrapItem>
       )}
-      <WrapItem>
-        <TotalText text={`Total:  ${snap.exp && snap.exp.length}`} />
-      </WrapItem>
+      {snap.searchResults.length !== snap.exp.length ? (
+        <WrapItem>
+          <TotalText
+            text={`Results ${snap.searchResults.length} of ${snap.exp.length}`}
+          />
+        </WrapItem>
+      ) : (
+        <WrapItem>
+          <TotalText text={`Total Expenses: ${snap.exp.length}`} />
+        </WrapItem>
+      )}
     </Wrap>
   );
 };

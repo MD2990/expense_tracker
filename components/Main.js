@@ -8,40 +8,76 @@ import {
 } from "react-icons/fc";
 
 import Link from "next/link";
-import { Center, StackDivider, Text, Wrap, WrapItem } from "@chakra-ui/layout";
+import {
+  Center,
+  StackDivider,
+  Text,
+  Wrap,
+  WrapItem,
+  Box,
+  HStack,
+  UnorderedList,
+  ListItem,
+} from "@chakra-ui/react";
 import React from "react";
-export function CustomCol({ path, children, text }) {
+
+const LinkPath = ({ path, text }) => (
+  <Link href={path}>
+    <a>
+      <UnorderedList
+        px="2"
+        fontSize={["sm", "md", "lg", "2xl", "3xl"]}
+        fontWeight="bold"
+        textAlign="left"
+        fontFamily="serif"
+        color="blue.300"
+      >
+        <ListItem
+          _hover={{
+            color: "blue.600",
+            transition: "all 0.4s ease-in-out",
+          }}
+        >
+          {text}
+        </ListItem>
+      </UnorderedList>
+    </a>
+  </Link>
+);
+
+export function CustomCol({ children, title }) {
   return (
     <WrapItem
-      shadow="dark-lg"
-      p="3"
-      rounded={"xl"}
-      textAlign="center"
-      justifyContent="center"
+      shadow="inner"
+      flexDirection={"column"}
+      fontSize={["sm", "md", "lg"]}
+      rounded="xl"
     >
-      <Link href={path}>
-        <a>
-          <Center>
-            <Text
-            px='2'
-              overflow="hidden"
-              textOverflow="ellipsis"
-              whiteSpace="nowrap"
-              
-              alignSelf="flex-end"
-              fontSize={{ base: "xl", lg: "2xl", md: "xl", sm: "md" }}
-              fontWeight="bold"
-              textAlign="center"
-              fontFamily="serif"
-              minW='10rem'
-              maxW='15rem'
-            >
-              {text}
-            </Text>
-            {children}
-          </Center>
-        </a>
-      </Link>
+      <Text
+        p="2"
+        color={"powderblue"}
+        overflow="hidden"
+        textOverflow="ellipsis"
+        whiteSpace="nowrap"
+        alignSelf="center"
+        fontWeight="bold"
+        textAlign="center"
+        fontFamily="serif"
+        fontSize={["md", "lg", "2xl", "5xl", "7xl"]}
+      >
+        {title}
+      </Text>
+
+      <Box
+        p="3"
+        rounded={"xl"}
+        textAlign="center"
+        justifyContent="center"
+        alignItems="center"
+        flexDir={"column"}
+      >
+        {children}
+      </Box>
     </WrapItem>
   );
 }
@@ -53,7 +89,7 @@ export default function Main() {
           textAlign="center"
           fontSize={{ base: "xl", lg: "8xl", md: "3xl", sm: "md" }}
           fontWeight="extrabold"
-          color="teal.500"
+          color="tan"
         >
           Welcome to Muscat Shopping Center
         </Text>
@@ -67,24 +103,18 @@ export default function Main() {
         justify="center"
         align="center"
       >
-        <CustomCol path="/ShowBill" text={"Show Bills"}>
-          <FcInspection  size='4rem'  />
-        </CustomCol>
-        <CustomCol path="/AddBill" text={"Add Bill"}>
-          <FcKindle  size='4rem'/>
+        <CustomCol title={"Bills"}>
+          <LinkPath path="/ShowBill" text="Show Bills" />
+          <LinkPath path="/AddBill" text="Add Bill" />
         </CustomCol>
 
-        <CustomCol path="/ShowExp" text={"Show Expenses"}>
-          <FcBullish size='4rem' />
+        <CustomCol title={"Expenses"}>
+          <LinkPath path="/ShowExp" text="Show Expenses" />
+          <LinkPath path="/AddExp" text="Add Expense" />
         </CustomCol>
-        <CustomCol path="/AddExp" text={"Add Expense"}>
-          <FcAcceptDatabase size='4rem' />
-        </CustomCol>
-        <CustomCol path="/ShowEmp" text={"Show Employees"}>
-          <FcCollaboration size='4rem' />
-        </CustomCol>
-        <CustomCol path="/AddEmp" text={"Add Employee"}>
-          <FcBusinessman size='4rem' />
+        <CustomCol title={"Employees"}>
+          <LinkPath path="/ShowEmp" text="Show Employees" />
+          <LinkPath path="/AddEmp" text="Add Employee" />
         </CustomCol>
       </Wrap>
     </>

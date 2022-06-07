@@ -128,14 +128,15 @@ export const BillButtons = ({ data }) => {
         />
       </WrapItem>
 
-      {snap.searchTerm.trim() != "" && (
+      {snap.searchResults.length !== data.length ? (
         <WrapItem>
-          <TotalText text={`${snap.searchResults.length} of`} />
+          <TotalText text={`Results ${snap.searchResults.length} of ${data.length}`} />
+        </WrapItem>
+      ) : (
+        <WrapItem>
+          <TotalText text={`Total Bills: ${snap.bill.length}`} />
         </WrapItem>
       )}
-      <WrapItem>
-        <TotalText text={`Total:  ${snap.bill && snap.bill.length}`} />
-      </WrapItem>
     </Wrap>
   );
 };

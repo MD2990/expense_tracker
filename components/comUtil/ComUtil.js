@@ -1,5 +1,5 @@
 import React from "react";
-import { Center, Box, VStack } from "@chakra-ui/layout";
+import { Center, Box, VStack } from "@chakra-ui/react";
 import { Field } from "formik";
 import colors from "../../lib/constants";
 import { useRouter } from "next/router";
@@ -38,7 +38,6 @@ export function Title({ title, mt = "8%", children }) {
     <Center mt={mt} mb="0%">
       <VStack>
         <Text
-          isTruncated
           style={{ textShadow: "2px 2px 14px white" }}
           textAlign="center"
           whiteSpace="nowrap"
@@ -76,8 +75,8 @@ export function PrintBtn({ click }) {
         onClick={() => click()}
         colorScheme="gray"
         fontSize={["xx-small", "md", "lg", "xl"]}
-        maxH={["2rem", "4rem", "8rem", "12rem"]}
-        maxW={["2rem", "4rem", "8rem", "12rem"]}
+        p={["1", "2", "3", "4"]}
+        h={["1.5rem", "2rem", "2.5rem", "3rem"]}
       >
         Print
       </Button>
@@ -92,11 +91,11 @@ export function Btn({ click, title, icon, color = "blackAlpha" }) {
       _focus={{ boxShadow: "none" }}
       color={color}
       fontSize={["xx-small", "md", "lg", "xl"]}
-      maxH={["2rem", "4rem", "8rem", "12rem"]}
-      maxW={["2rem", "4rem", "8rem", "12rem"]}
+      p={["1", "2", "3", "4"]}
+      h={["1.5rem", "2rem", "2.5rem", "3rem"]}
       leftIcon={icon}
-      className="hvr-grow"
-      size="lg"
+      className="hvr-grow "
+      size={"lg"}
       colorScheme="gray"
       variant="solid"
       onClick={() => click()}

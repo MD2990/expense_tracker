@@ -1,4 +1,4 @@
-import { NothingFound, Title } from "../comUtil/ComUtil";
+import { Title } from "../comUtil/ComUtil";
 import { HStack, Divider } from "@chakra-ui/react";
 import React, { useCallback, useEffect, useMemo } from "react";
 import Paginate from "../comUtil/Paginate";
@@ -71,11 +71,11 @@ export default function ShowBills({ bill }) {
     state.bill = bill.sort((a, b) => (a.bill_date > b.bill_date ? -1 : 1));
   }, [bill]);
   useEffect(() => {
-    state.searchTerm = "";
+    return () => {
+      state.searchTerm = "";
+      state.paymentText = "Filter by Payment";
+    };
   }, []);
-
-/*   if (snap.searchResults.length < 1)
-    return <NothingFound title="No Bills Added Yet" link="/AddBill" />; */
 
   return (
     <>
@@ -83,7 +83,7 @@ export default function ShowBills({ bill }) {
       <MainInterface>
         <BillButtons data={bill} />
         <Divider mt="-8" />
-        {snap.searchResults.length  ? (
+        {snap.searchResults.length ? (
           <MyTable
             size="sm"
             data={rs()}
@@ -93,7 +93,9 @@ export default function ShowBills({ bill }) {
             editFunc={editFunc}
             deleteFunc={deleteFunc}
           />
-        ):<Title title="No Bills Added Yet" />}
+        ) : (
+          <Title title="Nothing to Show... " />
+        )}
       </MainInterface>
       <HStack mt="12" justify="center">
         <Paginate />

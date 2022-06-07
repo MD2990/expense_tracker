@@ -9,7 +9,7 @@ export default function ErrorPage() {
     return (
       <Text
         className="hvr hvr-bounce-out"
-        isTruncated
+        
         overflow="hidden"
         textOverflow="ellipsis"
         as="span"
