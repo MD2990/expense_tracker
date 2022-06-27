@@ -16,11 +16,11 @@ export const EmpButtons = () => {
 
   const clear = () => {
     state.searchTerm = "";
-    state.emp = snap.emp;
+    state.emp = state.emp;
   };
 
   function printPdf() {
-    const rows = snap.searchResults.map(
+    const rows = state.searchResults.map(
       (
         { emp_name, job, civil_id, passport_number, empl_Date, notes },
         index

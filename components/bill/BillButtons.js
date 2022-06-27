@@ -2,7 +2,6 @@ import {
   AddIcon,
   CheckCircleIcon,
   RepeatIcon,
-  TimeIcon,
   WarningTwoIcon,
 } from "@chakra-ui/icons";
 import { Wrap, WrapItem } from "@chakra-ui/layout";
@@ -31,11 +30,11 @@ export const BillButtons = ({ data }) => {
     state.paid = !state.paid;
     state.bill = state.bill.filter((b) => b.payment_status !== state.paid);
 
-    snap.paid ? (state.paymentText = "Paid") : (state.paymentText = "Pending");
+    state.paid ? (state.paymentText = "Paid") : (state.paymentText = "Pending");
   }
 
   function printPdf() {
-    const rows = snap.searchResults.map(
+    const rows = state.searchResults.map(
       (
         {
           company_name,

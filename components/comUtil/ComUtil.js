@@ -28,7 +28,7 @@ import { BackButton } from "../sharedCom/Comp";
 export function HD({ text }) {
   return (
     <Head>
-      <title> {text}</title>
+      <title>{text}</title>
     </Head>
   );
 }

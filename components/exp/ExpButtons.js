@@ -16,11 +16,11 @@ export const ExpButtons = () => {
 
   const clear = () => {
     state.searchTerm = "";
-    state.exp = snap.exp;
+    state.exp = state.exp;
   };
 
   function printPdf() {
-    const rows = snap.searchResults.map(
+    const rows = state.searchResults.map(
       (
         {
           _id,
