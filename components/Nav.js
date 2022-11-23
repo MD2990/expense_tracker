@@ -1,5 +1,5 @@
-import { Link as LN } from "@chakra-ui/react";
-import Link from "next/link";
+
+ import Link from "next/link";
 import {
   Box,
   Flex,
@@ -56,11 +56,12 @@ export default function WithSubnavigation() {
           <Text
             textAlign={useBreakpointValue({ base: "center", md: "left" })}
             color={useColorModeValue("whiteAlpha.800", "white")}
+         
           >
             <Link href="/">
-              <a>
+              
                 <SiHomeassistant size="2.5rem" />
-              </a>
+              
             </Link>
           </Text>
 
@@ -69,33 +70,7 @@ export default function WithSubnavigation() {
           </Flex>
         </Flex>
 
-        <Stack
-          flex={{ base: 1, md: 0 }}
-          justify={"flex-end"}
-          direction={"row"}
-          spacing={6}
-        >
-          {/*	<Button
-						as={'a'}
-						fontSize={'sm'}
-						fontWeight={400}
-						variant={'link'}
-						href={'#'}>
-						Sign In
-					</Button>
-					<Button
-						display={{ base: 'none', md: 'inline-flex' }}
-						fontSize={'sm'}
-						fontWeight={600}
-						color={'white'}
-						bg={'pink.400'}
-						href={'#'}
-						_hover={{
-							bg: 'pink.300',
-						}}>
-						Sign Up
-					</Button>*/}
-        </Stack>
+  
       </Flex>
 
       <Collapse in={isOpen} animateOpacity>
@@ -112,20 +87,19 @@ const DesktopNav = () => {
         <Box key={navItem.label}>
           <Popover trigger={"hover"} placement={"bottom-start"}>
             <PopoverTrigger>
-              <LN
-                p={2}
-                href={navItem.href ?? "#"}
-                fontSize={"xl"}
+              <Link p={2} href={navItem.href || "#"}>
+                <Text       fontSize={['sm','md','lg','xl']}
                 fontWeight={900}
                 color="whiteAlpha.700"
                 _focus={{ boxShadow: "none" }}
                 _hover={{
                   textDecoration: "none",
                   color: colors.c2,
-                }}
-              >
-                {navItem.label}
-              </LN>
+                }} 
+                >
+                  {navItem.label}
+                </Text>
+              </Link>
             </PopoverTrigger>
 
             {navItem.children && (
@@ -160,15 +134,8 @@ const DesktopNav = () => {
 
 const DesktopSubNav = ({ label, href, children }) => {
   return (
-    <LN
-      minW="15rem"
-      role={"group"}
-      display={"block"}
-      p={2}
-      rounded={"md"}
-      _hover={{ bg: "transparent" }}
-    >
-      <Link href={href} passHref>
+
+      <Link href={href} >
         <Stack direction={"row"} align={"center"}>
           {children}
           <Box>
@@ -191,7 +158,7 @@ const DesktopSubNav = ({ label, href, children }) => {
           ></Flex>
         </Stack>
       </Link>
-    </LN>
+  
   );
 };
 
@@ -212,13 +179,11 @@ const MobileNavItem = ({ label, children, href }) => {
     <Stack spacing={4} onClick={children && onToggle}>
       <Flex
         py={2}
-        as={LN}
+   
         href={href ?? "#"}
         justify={"space-between"}
         align={"center"}
-        _hover={{
-          textDecoration: "none",
-        }}
+    
       >
         <Text fontWeight={600} color={colors.c3}>
           {label}
@@ -238,9 +203,7 @@ const MobileNavItem = ({ label, children, href }) => {
         in={isOpen}
         animateOpacity
         style={{ marginTop: "0!important" }}
-        _hover={{
-          boxShadow: "none",
-        }}
+     
       >
         <Stack
           mt={2}
@@ -252,9 +215,9 @@ const MobileNavItem = ({ label, children, href }) => {
         >
           {children &&
             children.map((child) => (
-              <LN key={child.label} py={2} href={child.href}>
+              <Link key={child.label} py={2} href={child.href}>
                 {child.label}
-              </LN>
+              </Link>
             ))}
         </Stack>
       </Collapse>

@@ -54,7 +54,7 @@ export default function MyTable({
                   {t[e]}
                   {e === "edit" && (
                     <Link href={editFunc(t)} passHref>
-                      <a>
+                      
                         <IconButton
                           aria-label="Edit"
                           icon={<EditIcon />}
@@ -62,7 +62,7 @@ export default function MyTable({
                           color={"gray.400"}
                           fontSize={["xl", "2lg", "3xl"]}
                         />
-                      </a>
+                      
                     </Link>
                   )}
                   {e === "payment_status" && (t[e] ? "Paid" : "Unpaid")}
@@ -109,7 +109,6 @@ export default function MyTable({
                   )}
                   {add && e === "add" && (
                     <Link href={addFunc(t)} passHref>
-                      <a>
                         <AddIcon
                           aria-label="Add"
                           icon={<LinkIcon />}
@@ -117,7 +116,7 @@ export default function MyTable({
                           color={"green.300"}
                           fontSize={["xl", "2lg", "3xl"]}
                         />
-                      </a>
+                  
                     </Link>
                   )}
                 </Td>
