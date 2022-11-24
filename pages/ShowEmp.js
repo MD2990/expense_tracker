@@ -1,18 +1,16 @@
+import React from "react";
 import ShowEmps from "../components/emp/ShowEmps";
 import { jsonify } from "../utils/dbConnect";
 import { HD, MySkeletons } from "../components/comUtil/ComUtil";
 import connectToDatabase from "../utils/mongodb";
 
 export default function ShowEmp({ emp }) {
-
-
-
   if (!emp) return <MySkeletons />;
 
   return (
     <>
       <HD text="Show Employees" />
-      <ShowEmps {...{emp}} />
+      <ShowEmps {...{ emp }} />
     </>
   );
 }

@@ -18,7 +18,7 @@ import { useSnapshot } from "valtio";
 import state from "./store";
 
 export default function MyTable({
-  size = "lg",
+  size = "md",
   data,
   tableTitle,
   deleteFunc,
@@ -39,7 +39,9 @@ export default function MyTable({
         <Thead>
           <Tr>
             {tableHeads.map((e, i) => (
-              <Th key={i}>{e}</Th>
+              <Th fontSize={["xx-small", "xs"]} key={i}>
+                {e}
+              </Th>
             ))}
           </Tr>
         </Thead>
@@ -47,22 +49,24 @@ export default function MyTable({
           {data.map((t, index) => (
             <Tr key={t._id}>
               {tableRows.map((e, i) => (
-                <Td key={i} textAlign={"center"}>
+                <Td
+                  key={i}
+                  textAlign={"center"}
+                  fontSize={["xx-small", "xs", "sm", "md"]}
+                >
                   {/* add No field to the table if the field is 0 */}
                   {i === 0 && snap.currentPage * snap.PER_PAGE + index + 1}
 
                   {t[e]}
                   {e === "edit" && (
                     <Link href={editFunc(t)} passHref>
-                      
-                        <IconButton
-                          aria-label="Edit"
-                          icon={<EditIcon />}
-                          variant="unstyled"
-                          color={"gray.400"}
-                          fontSize={["xl", "2lg", "3xl"]}
-                        />
-                      
+                      <IconButton
+                        aria-label="Edit"
+                        icon={<EditIcon />}
+                        variant="unstyled"
+                        color={"gray.400"}
+                        fontSize={["xl", "2lg", "3xl"]}
+                      />
                     </Link>
                   )}
                   {e === "payment_status" && (t[e] ? "Paid" : "Unpaid")}
@@ -109,14 +113,13 @@ export default function MyTable({
                   )}
                   {add && e === "add" && (
                     <Link href={addFunc(t)} passHref>
-                        <AddIcon
-                          aria-label="Add"
-                          icon={<LinkIcon />}
-                          variant="unstyled"
-                          color={"green.300"}
-                          fontSize={["xl", "2lg", "3xl"]}
-                        />
-                  
+                      <AddIcon
+                        aria-label="Add"
+                        icon={<LinkIcon />}
+                        variant="unstyled"
+                        color={"green.300"}
+                        fontSize={["xl", "2lg", "3xl"]}
+                      />
                     </Link>
                   )}
                 </Td>
@@ -129,7 +132,7 @@ export default function MyTable({
   };
 
   return (
-    <Wrap justify={"center"} p="2" m="2" mb="4">
+    <Wrap justify={"center"} p="2" m="2" mb="4" overflowX={"auto"}>
       <WrapItem>
         <Table variant="striped" colorScheme="teal" size={size}>
           <TableCaption

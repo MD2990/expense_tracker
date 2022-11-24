@@ -63,6 +63,7 @@ export default function ShowExps({ exp }) {
   const editFunc = (e) => `/${e._id}/EditExp`;
 
   const rs = useCallback(
+    // eslint-disable-next-line valtio/state-snapshot-rule
     () => snap.searchResults.slice(snap.offset, snap.offset + snap.PER_PAGE),
     [snap.searchResults, snap.offset, snap.PER_PAGE]
   );
@@ -96,7 +97,6 @@ export default function ShowExps({ exp }) {
         ) : (
           <Title title="Nothing to Show... " />
         )}
-     
       </MainInterface>
       <HStack mt="12" justify="center" alignItems="center" align="center">
         <Paginate />

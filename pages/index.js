@@ -1,3 +1,4 @@
+import React from "react";
 import { HD } from "../components/comUtil/ComUtil";
 import Main from "../components/Main";
 import { jsonify } from "../utils/dbConnect";

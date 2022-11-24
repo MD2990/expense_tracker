@@ -1,3 +1,30 @@
 {
-  "extends": ["next/core-web-vitals", "plugin:valtio/recommended"]
+  "parserOptions": {
+    "sourceType": "module",
+    "ecmaVersion": "latest"
+  },
+  "extends": [
+    "plugin:valtio/recommended",
+    "plugin:@next/next/recommended",
+    "plugin:react/recommended",
+    "plugin:react-hooks/recommended"
+  ],
+  "rules": {
+    "valtio/state-snapshot-rule": "warn",
+    "valtio/avoid-this-in-proxy": "warn",
+    "react/prop-types": 0,
+    "no-unused-vars": [
+      "error",
+      {
+        "ignoreRestSiblings": true,
+        "destructuredArrayIgnorePattern": "[A-Z]",
+        "caughtErrors": "none"
+      }
+    ]
+  },
+  "settings": {
+    "react": {
+      "version": "detect"
+    }
+  }
 }

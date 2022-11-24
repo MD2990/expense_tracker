@@ -1,3 +1,4 @@
+import React from "react";
 import { AddIcon, RepeatIcon } from "@chakra-ui/icons";
 import { Wrap, WrapItem } from "@chakra-ui/layout";
 import { useRouter } from "next/dist/client/router";
@@ -61,7 +62,7 @@ export const EmpButtons = () => {
         <SearchInput data={snap.emp} />
       </WrapItem>
       <WrapItem>
-        <Btn icon={<RepeatIcon />} click={() => clear()} title="Show All" />
+        <Btn icon={<RepeatIcon />} click={clear} title="Show All" />
       </WrapItem>
       <WrapItem>
         <Btn
@@ -72,12 +73,12 @@ export const EmpButtons = () => {
       </WrapItem>
 
       <WrapItem>
-        <PrintBtn click={() => printPdf()} />
+        <PrintBtn click={printPdf} />
       </WrapItem>
 
       {snap.searchTerm.trim() != "" && (
         <WrapItem>
-          <TotalText text={`${snap.searchResults.length} of`} />
+          <TotalText text={`${snap.searchResults.length} of `} />
         </WrapItem>
       )}
       <WrapItem>

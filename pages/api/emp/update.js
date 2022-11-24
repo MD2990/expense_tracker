@@ -1,5 +1,4 @@
 import { getDate } from "../../../lib/helpers";
-import { toCurrency } from "../../../utils/dbConnect";
 import connectToDatabase from "../../../utils/mongodb";
 
 var mongodb = require("mongodb");

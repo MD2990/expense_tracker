@@ -35,24 +35,24 @@ export function HD({ text }) {
 
 export function Title({ title, mt = "8%", children }) {
   return (
-    <Center mt={mt} mb="0%">
+    <Center mt={mt} px="2" mx="2" >
       <VStack>
         <Text
-          style={{ textShadow: "2px 2px 14px white" }}
+          align="center"
+          alignSelf={"center"}
+          textShadow="1px 2px 2px white"
           textAlign="center"
-          whiteSpace="nowrap"
-          overflow="hidden"
-          textOverflow="ellipsis"
-          fontSize={["sm", "md", "lg", "2xl"]}
+          noOfLines={1}
+          whiteSpace="break-spaces"
+          fontSize={["md", "lg", "2xl", "3xl"]}
           fontFamily="initial"
-          color={colors.c2}
+          color={colors.c3}
           fontWeight={"black"}
           letterSpacing="1.0px"
-          rounded="xl"
-          p={["3%", "4%", "5%", "6%"]}
-          mx="6"
+          rounded="md"
+          p={[1, 2, 3, 4]}
           userSelect="none"
-          bgGradient={`linear(to-b, white,${colors.c4})`}
+          bgGradient={`linear(to-l, white,${colors.c4})`}
         >
           {title}
         </Text>

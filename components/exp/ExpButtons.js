@@ -1,3 +1,4 @@
+import React from "react";
 import { AddIcon, RepeatIcon } from "@chakra-ui/icons";
 import { Wrap, WrapItem } from "@chakra-ui/layout";
 import { useRouter } from "next/dist/client/router";
@@ -66,7 +67,7 @@ export const ExpButtons = () => {
       { title: "Remarks", key: "notes" },
     ];
 
-    return toPDF(rows, columns, "exp Details");
+    return toPDF(rows, columns, "Expenses");
   }
   return (
     <Wrap spacing="4" justify="center" align="center" p="2" m="2">

@@ -1,5 +1,4 @@
-
- import Link from "next/link";
+import Link from "next/link";
 import {
   Box,
   Flex,
@@ -11,8 +10,6 @@ import {
   Popover,
   PopoverTrigger,
   PopoverContent,
-  useColorModeValue,
-  useBreakpointValue,
   useDisclosure,
 } from "@chakra-ui/react";
 import {
@@ -25,7 +22,7 @@ import {
 } from "@chakra-ui/icons";
 import colors from "../lib/constants";
 import { SiHomeassistant } from "react-icons/si";
-
+import React from "react";
 export default function WithSubnavigation() {
   const { isOpen, onToggle } = useDisclosure();
 
@@ -33,7 +30,7 @@ export default function WithSubnavigation() {
     <Box>
       <Flex
         bg={colors.c3}
-        minH={"80px"}
+        minH={"50px"}
         py={{ base: 2 }}
         px={{ base: 4 }}
         align={"center"}
@@ -44,33 +41,40 @@ export default function WithSubnavigation() {
           display={{ base: "flex", md: "none" }}
         >
           <IconButton
+            fontSize={["xs", "sm", "md"]}
             onClick={onToggle}
-            icon={
-              isOpen ? <CloseIcon w={3} h={3} /> : <HamburgerIcon w={5} h={5} />
-            }
+            icon={isOpen ? <CloseIcon /> : <HamburgerIcon />}
             variant={"ghost"}
             aria-label={"Toggle Navigation"}
           />
         </Flex>
-        <Flex flex={{ base: 1 }} justify={{ base: "center", md: "start" }}>
-          <Text
-            textAlign={useBreakpointValue({ base: "center", md: "left" })}
-            color={useColorModeValue("whiteAlpha.800", "white")}
-         
-          >
-            <Link href="/">
-              
-                <SiHomeassistant size="2.5rem" />
-              
-            </Link>
-          </Text>
+        <Flex flex={{ base: 3 }} justify={"flex-start"}>
+          <Link href="/">
+            <Box
+              align="center"
+              justify={"flex-start"}
+              alignSelf="center"
+              alignContent={"flex-start"}
+              alignItems={"flex-start"}
+              m="auto"
+              justifyContent={"flex-start"}
+              justifySelf="flex-start"
+              p="1"
+              fontSize={["xl", "2xl", "4xl"]}
+            >
+              <SiHomeassistant color="white" />
+            </Box>
+          </Link>
 
-          <Flex display={{ base: "none", md: "flex" }} ml={10}>
+          <Flex
+            display={{ base: "none", md: "flex" }}
+            align="center"
+            m="auto"
+            p="1"
+          >
             <DesktopNav />
           </Flex>
         </Flex>
-
-  
       </Flex>
 
       <Collapse in={isOpen} animateOpacity>
@@ -82,20 +86,21 @@ export default function WithSubnavigation() {
 
 const DesktopNav = () => {
   return (
-    <Stack direction={"row"} spacing={4} mt="3">
+    <Stack direction={"row"} spacing={[1, 2, 3, 4]} px="2" m="auto" p="1">
       {NAV_ITEMS.map((navItem) => (
         <Box key={navItem.label}>
           <Popover trigger={"hover"} placement={"bottom-start"}>
             <PopoverTrigger>
               <Link p={2} href={navItem.href || "#"}>
-                <Text       fontSize={['sm','md','lg','xl']}
-                fontWeight={900}
-                color="whiteAlpha.700"
-                _focus={{ boxShadow: "none" }}
-                _hover={{
-                  textDecoration: "none",
-                  color: colors.c2,
-                }} 
+                <Text
+                  fontSize={["sm", "md", "lg", "xl"]}
+                  fontWeight={900}
+                  color="whiteAlpha.700"
+                  _focus={{ boxShadow: "none" }}
+                  _hover={{
+                    textDecoration: "none",
+                    color: colors.c2,
+                  }}
                 >
                   {navItem.label}
                 </Text>
@@ -108,7 +113,6 @@ const DesktopNav = () => {
                 color={colors.c2}
                 fontSize={"lg"}
                 fontWeight="extrabold"
-                border={0}
                 boxShadow={"xl"}
                 bg="white"
                 p={2}
@@ -134,31 +138,29 @@ const DesktopNav = () => {
 
 const DesktopSubNav = ({ label, href, children }) => {
   return (
-
-      <Link href={href} >
-        <Stack direction={"row"} align={"center"}>
-          {children}
-          <Box>
-            <Text
-              transition={"all .3s ease"}
-              _groupHover={{ color: colors.c3 }}
-              fontWeight={500}
-            >
-              {label}
-            </Text>
-          </Box>
-          <Flex
+    <Link href={href}>
+      <Stack direction={"row"} align={"center"}>
+        {children}
+        <Box>
+          <Text
             transition={"all .3s ease"}
-            transform={"translateX(-10px)"}
-            opacity={0}
-            _groupHover={{ opacity: "100%", transform: "translateX(0)" }}
-            justify={"flex-end"}
-            align={"center"}
-            flex={1}
-          ></Flex>
-        </Stack>
-      </Link>
-  
+            _groupHover={{ color: colors.c3 }}
+            fontWeight={500}
+          >
+            {label}
+          </Text>
+        </Box>
+        <Flex
+          transition={"all .3s ease"}
+          transform={"translateX(-10px)"}
+          opacity={0}
+          _groupHover={{ opacity: "100%", transform: "translateX(0)" }}
+          justify={"flex-end"}
+          align={"center"}
+          flex={1}
+        ></Flex>
+      </Stack>
+    </Link>
   );
 };
 
@@ -177,14 +179,7 @@ const MobileNavItem = ({ label, children, href }) => {
 
   return (
     <Stack spacing={4} onClick={children && onToggle}>
-      <Flex
-        py={2}
-   
-        href={href ?? "#"}
-        justify={"space-between"}
-        align={"center"}
-    
-      >
+      <Flex py={2} href={href ?? "#"} align={"center"}>
         <Text fontWeight={600} color={colors.c3}>
           {label}
         </Text>
@@ -199,23 +194,11 @@ const MobileNavItem = ({ label, children, href }) => {
         )}
       </Flex>
 
-      <Collapse
-        in={isOpen}
-        animateOpacity
-        style={{ marginTop: "0!important" }}
-     
-      >
-        <Stack
-          mt={2}
-          pl={4}
-          borderLeft={1}
-          borderStyle={"solid"}
-          borderColor={useColorModeValue("gray.200", "gray.700")}
-          align={"start"}
-        >
+      <Collapse in={isOpen} animateOpacity style={{ marginTop: "0!important" }}>
+        <Stack mt={2} pl={4} boxShadow="2xl" align={"start"}>
           {children &&
             children.map((child) => (
-              <Link key={child.label} py={2} href={child.href}>
+              <Link key={child.label} href={child.href}>
                 {child.label}
               </Link>
             ))}

@@ -59,6 +59,7 @@ export default function ShowEmps({ emp }) {
   const editFunc = (e) => `/${e._id}/EditEmp`;
 
   const rs = useCallback(
+    // eslint-disable-next-line valtio/state-snapshot-rule
     () => snap.searchResults.slice(snap.offset, snap.offset + snap.PER_PAGE),
     [snap.searchResults, snap.offset, snap.PER_PAGE]
   );

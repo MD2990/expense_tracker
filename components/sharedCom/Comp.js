@@ -1,15 +1,11 @@
+import React from "react";
 import { Button } from "@chakra-ui/button";
-import {
-  ArrowBackIcon,
-} from "@chakra-ui/icons";
+import { ArrowBackIcon } from "@chakra-ui/icons";
 import { Center, Wrap } from "@chakra-ui/layout";
 import { useRouter } from "next/dist/client/router";
 
-
-
 export const BackButton = ({ ml = "0", mr = "0", mt = "0", mb = "0" }) => {
   const router = useRouter();
-
 
   const color = "gray.400";
   return (

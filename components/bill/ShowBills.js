@@ -80,7 +80,7 @@ export default function ShowBills({ bill }) {
 
   return (
     <>
-      <Title title="Bill Details" />
+      <Title title="Bill Details aaaaaaaaaaaaaaaaaaaaaaaaaaaaaasa asssssssssssas asssssss" />
       <MainInterface>
         <BillButtons data={bill} />
         <Divider mt="-8" />

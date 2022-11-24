@@ -1,3 +1,4 @@
+import React from "react";
 import {
   AddIcon,
   CheckCircleIcon,
@@ -81,7 +82,7 @@ export const BillButtons = ({ data }) => {
       { title: "Remarks", key: "notes" },
     ];
 
-    return toPDF(rows, columns, "bill Details");
+    return toPDF(rows, columns, "Bills");
   }
   return (
     <Wrap spacing="4" justify="center" align="center" m="2" p="2">
@@ -129,7 +130,9 @@ export const BillButtons = ({ data }) => {
 
       {snap.searchResults.length !== data.length ? (
         <WrapItem>
-          <TotalText text={`Results ${snap.searchResults.length} of ${data.length}`} />
+          <TotalText
+            text={`Results ${snap.searchResults.length} of ${data.length}`}
+          />
         </WrapItem>
       ) : (
         <WrapItem>

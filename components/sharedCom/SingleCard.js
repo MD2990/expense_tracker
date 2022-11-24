@@ -1,3 +1,4 @@
+
 import { AddIcon, DeleteIcon, ViewIcon } from "@chakra-ui/icons";
 import {
   Accordion,
@@ -18,7 +19,6 @@ import React from "react";
 import { AiOutlineEdit } from "react-icons/ai";
 import { IconButton } from "@chakra-ui/react";
 import { setItem } from "../../lib/helpers";
-import state from "../store";
 export const AllText = ({ color = "whiteAlpha.900", title, data }) => (
   <Text pb="0.5" color={color}>
     <Text pr="1" as="span" fontWeight="medium" color="whiteAlpha.700">
