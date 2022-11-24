@@ -11,7 +11,6 @@ import { ToastContainer, Zoom } from "react-toastify";
 import { ChakraProvider } from "@chakra-ui/react";
 import Nav from "../components/Nav";
 
-//NProgress.configure({ easing: 'ease', speed: 500 });
 NProgress.configure({ showSpinner: true });
 Router.events.on("routeChangeStart", () => {
   NProgress.start();

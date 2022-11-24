@@ -2,7 +2,7 @@ import { getDate } from "../../../lib/helpers";
 import { toCurrency } from "../../../utils/dbConnect";
 import connectToDatabase from "../../../utils/mongodb";
 
-var mongodb = require("mongodb");
+const mongodb = require("mongodb");
 
 export default async function handler(req, res) {
   const { db } = await connectToDatabase();

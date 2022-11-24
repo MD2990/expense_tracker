@@ -1,10 +1,10 @@
 import React from "react";
-import { Center, Box, VStack } from "@chakra-ui/react";
 import { Field } from "formik";
 import colors from "../../lib/constants";
 import { useRouter } from "next/router";
 
 import {
+  Center, Box, VStack,
   Button,
   FormErrorMessage,
   FormLabel,

@@ -2,7 +2,7 @@ import { getDate } from "../../../lib/helpers";
 import { addCurrency, toCurrency } from "../../../utils/dbConnect";
 import connectToDatabase from "../../../utils/mongodb";
 
-var mongodb = require("mongodb");
+const mongodb = require("mongodb");
 
 export default async function handler(req, res) {
   const { db } = await connectToDatabase();
@@ -18,9 +18,8 @@ export default async function handler(req, res) {
     notes,
   } = req.body;
 
-
   total_sell = addCurrency(day_sell, shop_exp, other_exp);
-  exp_date = getDate(exp_date)
+  exp_date = getDate(exp_date);
   day_sell = toCurrency(day_sell);
   shop_exp = toCurrency(shop_exp);
   other_exp = toCurrency(other_exp);

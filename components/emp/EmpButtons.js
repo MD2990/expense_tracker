@@ -17,7 +17,6 @@ export const EmpButtons = () => {
 
   const clear = () => {
     state.searchTerm = "";
-    state.emp = state.emp;
   };
 
   function printPdf() {

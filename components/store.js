@@ -1,8 +1,8 @@
 import { proxy } from "valtio";
 
 const state = proxy({
-  paymentText: "Filter by Payment",
-  paid: false,
+
+  paid: undefined,
   searchTerm: "",
   searchResults: [],
   data: [],
@@ -14,9 +14,10 @@ const state = proxy({
   emp: [],
   sal: [],
   emp_id: null,
-  empName: null,
+  
   exp: [],
   empName: [],
   isDeleted: false,
+  paidOrNotFiltered: false,
 });
 export default state;

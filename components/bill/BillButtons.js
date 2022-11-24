@@ -1,6 +1,7 @@
 import React from "react";
 import {
   AddIcon,
+  CalendarIcon,
   CheckCircleIcon,
   RepeatIcon,
   WarningTwoIcon,
@@ -22,16 +23,16 @@ export const BillButtons = ({ data }) => {
 
   const clear = () => {
     state.searchTerm = "";
-    state.paymentText = "Filter by Payment";
+
     state.bill = data;
+    state.paidOrNotFiltered = false;
   };
 
   function getPaid() {
+    state.paidOrNotFiltered = true;
     state.bill = data;
     state.paid = !state.paid;
     state.bill = state.bill.filter((b) => b.payment_status !== state.paid);
-
-    state.paid ? (state.paymentText = "Paid") : (state.paymentText = "Pending");
   }
 
   function printPdf() {
@@ -111,34 +112,30 @@ export const BillButtons = ({ data }) => {
 
       <WrapItem>
         <Btn
-          title={snap.paymentText}
+          title="Filter By Payment"
           icon={
-            snap.paymentText == "Paid" ? (
+            !snap.paid ? (
               <CheckCircleIcon />
-            ) : snap.paymentText == "Pending" ? (
+            ) : snap.paid ? (
               <WarningTwoIcon />
-            ) : null
+            ) : (
+              <CalendarIcon />
+            )
           }
           color={
-            snap.paymentText == "Paid"
-              ? "turquoise"
-              : snap.paymentText == "Pending" && "red.400"
+            snap.paidOrNotFiltered
+              ? snap.paid
+                ? "turquoise"
+                : "red.400"
+              : "gray.900"
           }
           click={getPaid}
         />
       </WrapItem>
 
-      {snap.searchResults.length !== data.length ? (
-        <WrapItem>
-          <TotalText
-            text={`Results ${snap.searchResults.length} of ${data.length}`}
-          />
-        </WrapItem>
-      ) : (
-        <WrapItem>
-          <TotalText text={`Total Bills: ${snap.bill.length}`} />
-        </WrapItem>
-      )}
+      <WrapItem>
+        <TotalText text={`Total Bills: ${snap.searchResults.length}`} />
+      </WrapItem>
     </Wrap>
   );
 };

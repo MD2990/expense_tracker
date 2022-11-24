@@ -1,6 +1,6 @@
 import connectToDatabase from "../../../utils/mongodb";
 
-var mongodb = require("mongodb");
+const mongodb = require("mongodb");
 
 export default async function handler(req, res) {
   try {
@@ -15,8 +15,4 @@ export default async function handler(req, res) {
   } catch (error) {
     res.json(error);
   }
-
-  /* 	const response = await db
-		.collection('todo')
-		.deleteMany({ _id: req.body }, true); */
 }

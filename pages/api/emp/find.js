@@ -1,6 +1,6 @@
 import connectToDatabase from "../../../utils/mongodb";
 
-var mongodb = require("mongodb");
+const mongodb = require("mongodb");
 
 export default async function handler(req, res) {
   const { db } = await connectToDatabase();
@@ -8,7 +8,6 @@ export default async function handler(req, res) {
 
   _id = new mongodb.ObjectId(_id);
 
- 
   const data = await db
     .collection("emp")
     .findOne({ _id: mongodb.ObjectId(_id) });
