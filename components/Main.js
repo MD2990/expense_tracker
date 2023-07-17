@@ -1,3 +1,4 @@
+"use client";
 import Link from "next/link";
 import {
   Center,
@@ -46,7 +47,7 @@ export function CustomCol({ children, title }) {
         noOfLines="1"
         p="2"
         align="center"
-        alignSelf={'center'}
+        alignSelf={"center"}
         color={"powderblue"}
         fontWeight="bold"
         textAlign="center"
@@ -79,34 +80,32 @@ export default function Main() {
           fontSize={{ base: "xl", lg: "8xl", md: "3xl", sm: "md" }}
           fontWeight="extrabold"
           color="tan"
-          textDecor={'underline'}
+          textDecor={"underline"}
         >
           Welcome to Muscat Shopping Center
         </Text>
       </Center>
 
       <Wrap
- 
         mx="4"
         mt="5%"
         divider={<StackDivider borderColor="gray.500" />}
         spacing={{ base: "1rem", lg: "2.5rem", md: "1.5rem", sm: "1rem" }}
         justify="center"
         align="center"
-        p={[1,2,3,4]}
-       
+        p={[1, 2, 3, 4]}
       >
         <CustomCol title={"Bills"}>
-          <LinkPath path="/ShowBill" text="Show Bills" />
+          <LinkPath path="/bill" text="Show Bills" />
           <LinkPath path="/AddBill" text="Add Bill" />
         </CustomCol>
 
         <CustomCol title={"Expenses"}>
-          <LinkPath path="/ShowExp" text="Show Expenses" />
+          <LinkPath path="/exp" text="Show Expenses" />
           <LinkPath path="/AddExp" text="Add Expense" />
         </CustomCol>
         <CustomCol title={"Employees"}>
-          <LinkPath path="/ShowEmp" text="Show Employees" />
+          <LinkPath path="/emp" text="Show Employees" />
           <LinkPath path="/AddEmp" text="Add Employee" />
         </CustomCol>
       </Wrap>

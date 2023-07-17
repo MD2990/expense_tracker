@@ -1,3 +1,4 @@
+"use client";
 import Link from "next/link";
 import {
   Box,
@@ -23,7 +24,7 @@ import {
 import colors from "../lib/constants";
 import { SiHomeassistant } from "react-icons/si";
 import React from "react";
-export default function WithSubnavigation() {
+export default function Navigation() {
   const { isOpen, onToggle } = useDisclosure();
 
   return (
@@ -219,7 +220,7 @@ const NAV_ITEMS = [
       },
       {
         label: "Show Bills",
-        href: "/ShowBill",
+        href: "/bill",
         icon: <ExternalLinkIcon {...iconColor} />,
       },
     ],
@@ -235,7 +236,7 @@ const NAV_ITEMS = [
       },
       {
         label: "Show",
-        href: "/ShowExp",
+        href: "/exp",
         icon: <ExternalLinkIcon {...iconColor} />,
       },
     ],
@@ -250,7 +251,7 @@ const NAV_ITEMS = [
       },
       {
         label: "Show Employees",
-        href: "/ShowEmp",
+        href: "/emp",
         icon: <ExternalLinkIcon {...iconColor} />,
       },
     ],

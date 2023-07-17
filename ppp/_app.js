@@ -9,7 +9,7 @@ import "nprogress/nprogress.css";
 import "react-toastify/dist/ReactToastify.min.css";
 import { ToastContainer, Zoom } from "react-toastify";
 import { ChakraProvider } from "@chakra-ui/react";
-import Nav from "../components/Nav";
+import Nav from "../app/Nav";
 
 NProgress.configure({ showSpinner: true });
 Router.events.on("routeChangeStart", () => {
