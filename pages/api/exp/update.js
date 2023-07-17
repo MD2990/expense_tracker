@@ -28,7 +28,7 @@ export default async function handler(req, res) {
   await db
     .collection("exps")
     .updateOne(
-      { _id: mongodb.ObjectId(id) },
+      { _id: new mongodb.ObjectId(id) },
       {
         $set: {
           day_sell,

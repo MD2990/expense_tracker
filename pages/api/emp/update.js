@@ -14,7 +14,7 @@ export default async function handler(req, res) {
   await db
     .collection("emp")
     .updateOne(
-      { _id: mongodb.ObjectId(id) },
+      { _id: new mongodb.ObjectId(id) },
       {
         $set: {
           emp_name,

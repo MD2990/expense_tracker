@@ -7,15 +7,14 @@ export default async function handler(req, res) {
     const { db } = await connectToDatabase();
 
     const response = await db.collection("bill").deleteOne({
-      _id: mongodb.ObjectId(req.body),
+      _id: new mongodb.ObjectId(req.body),
     });
 
     if (response.deletedCount > 0) res.json({ ok: true });
     else res.json({ ok: false });
-  
   } catch (error) {
-    res.json(error);
+    res.json({
+      error: "Error in deleting Bill",
+    });
   }
-
-
 }

@@ -24,7 +24,7 @@ export async function getStaticProps({ params }) {
   const { db } = await connectToDatabase();
   const data = await db
     .collection("bill")
-    .findOne({ _id: mongodb.ObjectId(params.id) });
+    .findOne({ _id: new mongodb.ObjectId(params.id) });
     
     const bill = await jsonify(data);
   if ( !db || !data) {
