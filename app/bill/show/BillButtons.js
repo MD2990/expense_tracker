@@ -1,3 +1,4 @@
+
 import React from "react";
 import {
   AddIcon,
@@ -7,20 +8,18 @@ import {
   WarningTwoIcon,
 } from "@chakra-ui/icons";
 import { Wrap, WrapItem } from "@chakra-ui/layout";
-import { useRouter } from "next/dist/client/router";
+ import { useRouter } from "next/navigation";
 import { useSnapshot } from "valtio";
-import { Btn, PrintBtn } from "../comUtil/ComUtil";
-import SearchInput from "../comUtil/SearchInput";
-import state from "../store";
-import { toPDF } from "../../utils/dbConnect";
-import TotalText from "../sharedCom/TotalText";
-import { BackButton } from "../sharedCom/Comp";
+import { Btn, PrintBtn } from "@components/comUtil/ComUtil";
+import SearchInput from "@components/comUtil/SearchInput";
+import state from "@components/store";
+import { toPDF } from "@utils/dbConnect";
+import TotalText from "@components/sharedCom/TotalText";
+import { BackButton } from "@components/sharedCom/Comp";
 
 export const BillButtons = ({ data }) => {
   const snap = useSnapshot(state);
-
   const router = useRouter();
-
   const clear = () => {
     state.searchTerm = "";
 

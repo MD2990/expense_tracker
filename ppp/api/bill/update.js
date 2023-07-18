@@ -8,8 +8,6 @@ export default async function handler(req, res) {
   const { db } = await connectToDatabase();
   const id = req.query._id;
 
-
-
   let {
     company_name,
     bill_number,
@@ -24,8 +22,6 @@ export default async function handler(req, res) {
   bill_date = getDate(bill_date);
   check_date = getDate(check_date);
   bill_amount = toCurrency(bill_amount);
-
-
 
   await db
     .collection("bill")

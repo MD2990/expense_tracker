@@ -7,17 +7,17 @@ import {
   Title,
 } from "../comUtil/ComUtil";
 import { Form, Formik } from "formik";
-import { addCurrency, post } from "../../utils/dbConnect";
+import { addCurrency, Post } from "../../utils/dbConnect";
 
 import { Wrap, Center } from "@chakra-ui/react";
 import { expValidationSchema } from "../../lib/constants";
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
 import { today } from "../../lib/helpers";
 
 export default function AddExps() {
   const router = useRouter();
   async function add(values) {
-    await post({ url: "exp/add", values });
+    await Post({ url: "exp/add", values });
   }
 
   return (
@@ -92,15 +92,12 @@ export default function AddExps() {
                   fieldName="exp_date"
                   labelName="Date"
                   type="date"
-                  
                 />
                 <CustomTextArea fieldName="notes" labelName="Notes" />
               </Wrap>
             </Center>
 
             <FormBottomButton router={router} props={props}></FormBottomButton>
-
-       
           </Form>
         );
       }}

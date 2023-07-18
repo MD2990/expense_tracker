@@ -1,3 +1,4 @@
+"use client";
 import React from "react";
 import {
   CustomDropdown,
@@ -5,10 +6,9 @@ import {
   CustomTextArea,
   FormBottomButton,
   Title,
-} from "../comUtil/ComUtil";
+} from "@components/comUtil/ComUtil";
 import { Field, Form, Formik } from "formik";
-import { post } from "../../utils/dbConnect";
-
+import { Post } from "@utils/dbConnect";
 import {
   FormControl,
   FormLabel,
@@ -17,15 +17,18 @@ import {
   Center,
   WrapItem,
   Switch,
+  useToast,
 } from "@chakra-ui/react";
-import { validationSchema } from "../../lib/constants";
-import { useRouter } from "next/router";
-import { today } from "../../lib/helpers";
+import { validationSchema } from "@lib/constants";
+import { useRouter } from "next/navigation";
+import { today } from "@lib/helpers";
 
 export default function AddBills() {
+
+    const toast = useToast();
   const router = useRouter();
   async function add(values) {
-    await post({ url: "bill/add", values });
+    await Post({ url: "/bill/add/api", values, toast, type: "Bill" });
   }
 
   return (
@@ -41,11 +44,14 @@ export default function AddBills() {
         notes: "",
       }}
       onSubmit={async (values, actions) => {
-        actions.setSubmitting(true);
-
-        await add(values);
-
-        actions.resetForm();
+     try {
+         actions.setSubmitting(true);
+         await add(values);
+         actions.resetForm();
+     } catch (error) {
+          console.log(error);
+      
+     }
       }}
       validationSchema={validationSchema}
     >
@@ -55,7 +61,6 @@ export default function AddBills() {
         return (
           <Form>
             <Title title="Add New Bill" />
-
             <Center>
               <Wrap
                 maxW="55rem"

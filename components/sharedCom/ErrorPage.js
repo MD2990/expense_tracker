@@ -1,5 +1,6 @@
+
 import { Center, HStack, Text } from "@chakra-ui/react";
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
 import React from "react";
 import { HD } from "../comUtil/ComUtil";
 
@@ -9,7 +10,6 @@ export default function ErrorPage() {
     return (
       <Text
         className="hvr hvr-bounce-out"
-        
         overflow="hidden"
         textOverflow="ellipsis"
         as="span"

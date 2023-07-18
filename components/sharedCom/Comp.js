@@ -2,7 +2,7 @@ import React from "react";
 import { Button } from "@chakra-ui/button";
 import { ArrowBackIcon } from "@chakra-ui/icons";
 import { Center, Wrap } from "@chakra-ui/layout";
-import { useRouter } from "next/dist/client/router";
+import { useRouter } from "next/navigation";
 
 export const BackButton = ({ ml = "0", mr = "0", mt = "0", mb = "0" }) => {
   const router = useRouter();

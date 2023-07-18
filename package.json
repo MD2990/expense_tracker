@@ -18,7 +18,7 @@
     "axios": "^1.4.0",
     "currency.js": "^2.0.4",
     "formik": "^2.4.2",
-    "framer-motion": "^10.12.21",
+    "framer-motion": "^10.12.22",
     "hover.css": "^2.3.2",
     "jspdf": "^2.5.1",
     "jspdf-autotable": "^3.5.31",

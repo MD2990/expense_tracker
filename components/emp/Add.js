@@ -6,8 +6,8 @@ import {
   Title,
 } from "../comUtil/ComUtil";
 import { Form, Formik } from "formik";
-import { post } from "../../utils/dbConnect";
-import { useRouter } from "next/router";
+import { Post } from "../../utils/dbConnect";
+import { useRouter } from "next/navigation";
 import { Wrap, Center } from "@chakra-ui/react";
 import { empValidationSchema } from "../../lib/constants";
 import { today } from "../../lib/helpers";
@@ -16,7 +16,7 @@ export default function Add() {
   const router = useRouter();
 
   async function addEmp(values) {
-    await post({ url: "emp/add", values });
+    await Post({ url: "emp/add", values });
   }
 
   return (

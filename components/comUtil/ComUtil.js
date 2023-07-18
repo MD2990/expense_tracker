@@ -1,10 +1,12 @@
 import React from "react";
 import { Field } from "formik";
 import colors from "../../lib/constants";
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
 
 import {
-  Center, Box, VStack,
+  Center,
+  Box,
+  VStack,
   Button,
   FormErrorMessage,
   FormLabel,
@@ -35,7 +37,7 @@ export function HD({ text }) {
 
 export function Title({ title, mt = "8%", children }) {
   return (
-    <Center mt={mt} px="2" mx="2" >
+    <Center mt={mt} px="2" mx="2">
       <VStack>
         <Text
           align="center"

@@ -1,4 +1,3 @@
-
 import { AddIcon, DeleteIcon, ViewIcon } from "@chakra-ui/icons";
 import {
   Accordion,
@@ -83,7 +82,6 @@ export default function SingleCard({
                 onClick={() => {
                   setItem("id", _id);
                   setItem("emp", header);
-                 
 
                   router.push(`/${_id}/AddSalary`);
                 }}
@@ -104,8 +102,8 @@ export default function SingleCard({
                 color="blue.300"
                 size="1.5rem"
                 onClick={() => {
-                    setItem("id", _id);
-                    setItem("emp", header);
+                  setItem("id", _id);
+                  setItem("emp", header);
                   router.push(`/${_id}/ShowEmpSalPage`);
                 }}
               />

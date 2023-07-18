@@ -1,18 +1,18 @@
-import { Title } from "../comUtil/ComUtil";
+"use client";
+import { Title } from "@components/comUtil/ComUtil";
 import { HStack, Divider } from "@chakra-ui/react";
 import React, { useCallback, useEffect, useMemo } from "react";
-import Paginate from "../comUtil/Paginate";
+import Paginate from "@components/comUtil/Paginate";
 import { BillButtons } from "./BillButtons";
-import { MainInterface } from "../sharedCom/Comp";
-import MyTable from "../MyTable";
+import { MainInterface } from "@components/sharedCom/Comp";
+import MyTable from "@components/MyTable";
 import { useSnapshot } from "valtio";
-import state from "../store";
-import { handleFormDelete } from "../../lib/helpers";
-import { handleDelete } from "../../utils/dbConnect";
+import state from "@components/store";
+import { handleFormDelete } from "@lib/helpers";
+import { handleDelete } from "@utils/dbConnect";
 
 export default function ShowBills({ bill }) {
   const snap = useSnapshot(state);
-
   const tableHeads = useMemo(
     () => [
       "No",
@@ -60,7 +60,7 @@ export default function ShowBills({ bill }) {
     state.isDeleted = false;
   }
 
-  const editFunc = (e) => `/${e._id}/EditBill`;
+  const editFunc = (e) => `/bill/edit/${e._id}`;
 
   const rs = useCallback(
     // eslint-disable-next-line valtio/state-snapshot-rule

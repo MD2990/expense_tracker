@@ -7,15 +7,11 @@ import {
   Title,
 } from "../comUtil/ComUtil";
 import { Form, Formik } from "formik";
-import {
-  addCurrency,
-  handleDelete,
-  handlePut,
-} from "../../utils/dbConnect";
+import { addCurrency, handleDelete, handlePut } from "../../utils/dbConnect";
 
 import { Wrap, Center } from "@chakra-ui/react";
 import { expValidationSchema } from "../../lib/constants";
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
 import { handleFormDelete } from "../../lib/helpers";
 
 export default function Edit_Delete_Exp({ exp }) {

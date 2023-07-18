@@ -96,8 +96,8 @@ export default function Main() {
         p={[1, 2, 3, 4]}
       >
         <CustomCol title={"Bills"}>
-          <LinkPath path="/bill" text="Show Bills" />
-          <LinkPath path="/AddBill" text="Add Bill" />
+          <LinkPath path="/bill/show" text="Show Bills" />
+          <LinkPath path="/bill/add" text="Add Bill" />
         </CustomCol>
 
         <CustomCol title={"Expenses"}>

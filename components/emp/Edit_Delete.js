@@ -7,7 +7,7 @@ import {
 } from "../comUtil/ComUtil";
 import { Form, Formik } from "formik";
 import { handlePut, handleDelete } from "../../utils/dbConnect";
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
 
 import { Wrap, Center } from "@chakra-ui/react";
 import { empValidationSchema } from "../../lib/constants";

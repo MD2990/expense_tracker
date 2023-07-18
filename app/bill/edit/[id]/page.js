@@ -1,21 +1,12 @@
-import React from 'react'
-import connectToDatabase from "@utils/mongodb";
+import React from "react";
+import Edit from "./Edit";
+async function getBill(params) {
+  const res = await fetch(`http://localhost:3000/bill/edit/api?id=${params}`);
+  const bill = await res.json();
+  return bill;
+}
 
-export default function page({params}) {
-
-	async function getBill() {
-
-		  const { db } = await connectToDatabase();
-      const data = await db
-        .collection("bill")
-        .findOne({ _id: mongodb.ObjectId(params.id) });
-
-      const bill = await jsonify(data);
-
-	}
-
-	console.log(params.id);
-	return (
-	<></>
-  )
+export default async function page({ params }) {
+  const bill = await getBill(params.id);
+  return <Edit bill={bill} />; 
 }

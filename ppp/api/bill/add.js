@@ -1,4 +1,4 @@
-import connectToDatabase from '../../../utils/mongodb';
+import connectToDatabase from "../../../utils/mongodb";
 import { getDate } from "../../../lib/helpers";
 import { toCurrency } from "../../../utils/dbConnect";
 export default async function handler(req, res) {
@@ -29,6 +29,6 @@ export default async function handler(req, res) {
     check_date,
     notes,
   });
- 
+
   res.json({ data });
 }

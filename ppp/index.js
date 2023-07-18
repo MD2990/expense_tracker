@@ -1,6 +1,6 @@
 import React from "react";
 import { HD } from "../components/comUtil/ComUtil";
-import Main from "../components/Main";
+import Main from "../app/Main";
 import { jsonify } from "../utils/dbConnect";
 import connectToDatabase from "../utils/mongodb";
 

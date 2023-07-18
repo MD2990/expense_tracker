@@ -1,9 +1,7 @@
-import axios from 'axios';
-import * as currency from 'currency.js';
-import { toast } from 'react-toastify';
-import jsPDF from 'jspdf';
-import  "jspdf-autotable";
-
+import axios from "axios";
+import * as currency from "currency.js";
+import jsPDF from "jspdf";
+import "jspdf-autotable";
 
 export function jsonify(obj) {
   return JSON.parse(JSON.stringify(obj));
@@ -28,33 +26,39 @@ export function addCurrency(sell, a, b) {
   return result;
 }
 
-
 export function getSum(sum1, sum2, sub) {
   return currency(sum1).add(sum2).subtract(sub); // => "13.68"
 }
 
-export async function post({ url, values }) {
-  url = "/api/" + url;
+export async function Post({ url, values, toast, type }) {
   try {
     await axios
       .post(url, values)
-
       .then(() =>
-        toast(` Added Successfully `, {
-          type: toast.TYPE.SUCCESS,
-          autoClose: 1000,
+        toast({
+          title: "Added Successfully",
+          description: `${type} Added Successfully`,
+          status: "success",
+          duration: 2000,
+          isClosable: true,
         })
       )
       .catch(() => {
-        toast('Something went wrong, please try again', {
-          type: toast.TYPE.ERROR,
-          autoClose: 2000,
+        toast({
+          title: "Error",
+          description: "Something went wrong please try again",
+          status: "error",
+          duration: 3000,
+          isClosable: true,
         });
       });
   } catch (error) {
-    toast("Something went wrong please try again", {
-      type: toast.TYPE.ERROR,
-      autoClose: 2000,
+    toast({
+      title: "Error",
+      description: "Something went wrong please try again",
+      status: "error",
+      duration: 3000,
+      isClosable: true,
     });
   }
 }
@@ -102,11 +106,10 @@ export const handlePut = async ({ values, url, router }) => {
         autoClose: 2500,
       }
     );
-  
   }
 };
 
-export const handleDelete = async ({ deleteUrl, id ,msg=true}) => {
+export const handleDelete = async ({ deleteUrl, id, msg = true }) => {
   try {
     await fetch(`/api/${deleteUrl}`, {
       method: "DELETE",
@@ -115,24 +118,25 @@ export const handleDelete = async ({ deleteUrl, id ,msg=true}) => {
     }).then((res) =>
       res.json().then((res) => {
         if (res.ok) {
-         if(msg) toast(
-            ` Deleted Successfully`,
+          if (msg)
+            toast(
+              ` Deleted Successfully`,
 
-            {
-              type: toast.TYPE.SUCCESS,
-              autoClose: 2000,
-            }
-          );
+              {
+                type: toast.TYPE.SUCCESS,
+                autoClose: 2000,
+              }
+            );
         } else {
-          if(msg) toast(
-            ` Something went wrong, ${res.status} \n please try again`,
+          if (msg)
+            toast(
+              ` Something went wrong, ${res.status} \n please try again`,
 
-            {
-              type: toast.TYPE.ERROR,
-              autoClose: 2000,
-            }
-          );
-     
+              {
+                type: toast.TYPE.ERROR,
+                autoClose: 2000,
+              }
+            );
         }
       })
     );
@@ -202,4 +206,3 @@ export const toPDF = (rows, columns, title) => {
 
   doc.save("table.pdf");
 };
-

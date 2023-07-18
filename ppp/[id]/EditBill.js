@@ -1,6 +1,6 @@
 import { useRouter } from "next/dist/client/router";
 import React from "react";
-import Edit_Delete_Bill from "../../components/bill/Edit_Delete_Bill";
+import Edit_Delete_Bill from "../../app/bill/edit/jjj/Edit";
 import { HD, Spans } from "../../components/comUtil/ComUtil";
 import { jsonify } from "../../utils/dbConnect";
 import connectToDatabase from "../../utils/mongodb";
@@ -20,14 +20,13 @@ export default function EditBill({ bill }) {
   );
 }
 export async function getStaticProps({ params }) {
-
   const { db } = await connectToDatabase();
   const data = await db
     .collection("bill")
     .findOne({ _id: mongodb.ObjectId(params.id) });
-    
-    const bill = await jsonify(data);
-  if ( !db || !data) {
+
+  const bill = await jsonify(data);
+  if (!db || !data) {
     return {
       redirect: {
         destination: "/Error",
@@ -35,7 +34,6 @@ export async function getStaticProps({ params }) {
       },
     };
   }
-
 
   return {
     props: {
@@ -47,7 +45,6 @@ export async function getStaticProps({ params }) {
 export async function getStaticPaths() {
   const { db } = await connectToDatabase();
   const datas = await db.collection("bill").find({}).toArray();
-
 
   // Get the paths we want to pre-render based on posts
   const paths = datas.map((c) => ({
