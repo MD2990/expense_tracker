@@ -63,7 +63,7 @@ export async function Post({ url, values, toast, type }) {
   }
 }
 
-export const handlePut = async ({ values, url, router }) => {
+export const handlePut = async ({ values, url, router , type, toast }) => {
   const contentType = "application/json";
   const { id } = router.query;
 
@@ -79,33 +79,30 @@ export const handlePut = async ({ values, url, router }) => {
 
     // Throw error with status code in case Fetch API req failed
     if (!res.ok) {
-      toast(
-        ` Something went wrong, ${res.status} \n please try again`,
-
-        {
-          type: toast.TYPE.ERROR,
-          autoClose: 2000,
-        }
-      );
+        toast({
+          title: "Error",
+          description: "Something went wrong please try again",
+          status: "error",
+          duration: 3000,
+          isClosable: true,
+        });
     } else {
-      toast(
-        "Updated Successfully",
-
-        {
-          type: toast.TYPE.SUCCESS,
-          autoClose: 2000,
-        }
-      );
+      toast({
+          title: "Updated Successfully",
+          description: `${type} Updated Successfully`,
+          status: "success",
+          duration: 2000,
+          isClosable: true,
+        })
     }
   } catch (error) {
-    toast(
-      ` Something went wrong, ${error} \n please try again`,
-
-      {
-        type: toast.TYPE.ERROR,
-        autoClose: 2500,
-      }
-    );
+    toast({
+      title: "Error",
+      description: "Something went wrong please try again",
+      status: "error",
+      duration: 3000,
+      isClosable: true,
+    });
   }
 };
 

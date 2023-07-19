@@ -1,4 +1,4 @@
- "use client";
+"use client";
 import React from "react";
 import {
   CustomDropdown,
@@ -16,6 +16,7 @@ import {
   Center,
   WrapItem,
   Switch,
+  useToast,
 } from "@chakra-ui/react";
 import { handleDelete, handlePut } from "@utils/dbConnect";
 import { useRouter } from "next/navigation";
@@ -24,6 +25,7 @@ import { validationSchema } from "@lib/constants";
 
 export default function Edit_Delete_Bill({ bill }) {
   const router = useRouter();
+  const toast = useToast();
 
   const {
     _id,
@@ -38,7 +40,13 @@ export default function Edit_Delete_Bill({ bill }) {
   } = bill;
 
   async function put(values) {
-    await handlePut({ values, url: "bill/update", router });
+    await handlePut({
+      values,
+      url: "bill/update",
+      router,
+      type: "bill",
+      toast,
+    });
     router.back();
   }
 
@@ -58,7 +66,7 @@ export default function Edit_Delete_Bill({ bill }) {
           _id,
           company_name,
           bill_number,
-          bill_date,
+          bill_date: [bill_date].join("/"),
           bill_type,
           bill_amount,
           payment_status,
@@ -172,4 +180,3 @@ export default function Edit_Delete_Bill({ bill }) {
     </>
   );
 }
-

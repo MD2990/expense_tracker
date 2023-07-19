@@ -213,7 +213,7 @@ export const CustomField = ({ fieldName, labelName, type = "text" }) => {
               id={fieldName}
               placeholder={labelName}
               size="lg"
-              type={type}
+              type={(type='date' && "DD-MM-YYYY")}
               w={type === "date" && "252px"}
             />
             <FormErrorMessage>{meta.error}</FormErrorMessage>
