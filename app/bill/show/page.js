@@ -1,13 +1,11 @@
 import React from "react";
 import ShowBills from "./ShowBills";
+import connectToDatabase from "@utils/mongodb";
 
 async function getData() {
-  const data = await fetch("http://localhost:3000/bill/show/api", {
-    next: {
-      revalidate: 5,
-    },
-  });
-  const { bill } = await data.json();
+  const { db } = await connectToDatabase();
+  const data = await db.collection("bill").find({}).toArray();
+  const  bill  = JSON.parse(JSON.stringify(data));
   return bill;
 }
 

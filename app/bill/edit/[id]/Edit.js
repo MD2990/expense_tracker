@@ -37,17 +37,22 @@ export default function Edit_Delete_Bill({ bill }) {
     payment_status,
     check_date,
     notes,
-  } = bill;
+  } = bill || {};
 
   async function put(values) {
-    await handlePut({
-      values,
-      url: "bill/update",
-      router,
-      type: "bill",
-      toast,
-    });
-    router.back();
+    try {
+      console.log(_id);
+      await handlePut({
+        values,
+        url: `http://localhost:3000/bill/edit/api?id=${_id}`,
+        type: `Bill No. ${bill_number} `,
+        toast,
+        id: _id,
+      });
+      router.back();
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   async function FormDeleteFunc() {

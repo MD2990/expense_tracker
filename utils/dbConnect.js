@@ -63,37 +63,45 @@ export async function Post({ url, values, toast, type }) {
   }
 }
 
-export const handlePut = async ({ values, url, router , type, toast }) => {
+export const handlePut = async ({ values, url, type, toast }) => {
   const contentType = "application/json";
-  const { id } = router.query;
 
   try {
-    const res = await fetch(`/api/${url}?_id=${id}`, {
-      method: "PUT",
-      headers: {
-        Accept: contentType,
-        "Content-Type": contentType,
+    const res = await fetch(
+      url,
+      {
+        method: "PUT",
+        headers: {
+          Accept: contentType,
+          "Content-Type": contentType,
+        },
+
+        body: JSON.stringify(values),
       },
-      body: JSON.stringify(values),
-    });
+      {
+        next: {
+          cache: "no-store",
+        },
+      }
+    );
 
     // Throw error with status code in case Fetch API req failed
     if (!res.ok) {
-        toast({
-          title: "Error",
-          description: "Something went wrong please try again",
-          status: "error",
-          duration: 3000,
-          isClosable: true,
-        });
+      toast({
+        title: "Error",
+        description: "Something went wrong please try again",
+        status: "error",
+        duration: 3000,
+        isClosable: true,
+      });
     } else {
       toast({
-          title: "Updated Successfully",
-          description: `${type} Updated Successfully`,
-          status: "success",
-          duration: 2000,
-          isClosable: true,
-        })
+        title: "Updated Successfully",
+        description: `${type} Updated Successfully`,
+        status: "success",
+        duration: 2500,
+        isClosable: true,
+      });
     }
   } catch (error) {
     toast({
