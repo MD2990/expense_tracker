@@ -12,10 +12,7 @@ export default async function handler(req, res) {
 
     if (response.deletedCount > 0) res.json({ ok: true });
     else res.json({ ok: false });
-  
   } catch (error) {
     res.json(error);
   }
-
-
 }

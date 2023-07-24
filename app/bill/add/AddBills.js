@@ -24,11 +24,20 @@ import { useRouter } from "next/navigation";
 import { today } from "@lib/helpers";
 
 export default function AddBills() {
-
-    const toast = useToast();
+  const toast = useToast();
   const router = useRouter();
   async function add(values) {
-    await Post({ url: "/bill/add/api", values, toast, type: "Bill" });
+    try {
+      await Post({ url: "/bill/add/api", values, toast, type: "Bill" });
+    } catch (error) {
+      toast({
+        title: "An error occurred.",
+        description: "Unable to add bill.",
+        status: "error",
+        duration: 3000,
+        isClosable: true,
+      });
+    }
   }
 
   return (
@@ -44,14 +53,19 @@ export default function AddBills() {
         notes: "",
       }}
       onSubmit={async (values, actions) => {
-     try {
-         actions.setSubmitting(true);
-         await add(values);
-         actions.resetForm();
-     } catch (error) {
-          console.log(error);
-      
-     }
+        try {
+          actions.setSubmitting(true);
+          await add(values);
+          actions.resetForm();
+        } catch (error) {
+          toast({
+            title: "An error occurred.",
+            description: "Unable to add bill.",
+            status: "error",
+            duration: 3000,
+            isClosable: true,
+          });
+        }
       }}
       validationSchema={validationSchema}
     >

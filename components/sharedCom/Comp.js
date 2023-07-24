@@ -1,7 +1,7 @@
 import React from "react";
 import { Button } from "@chakra-ui/button";
 import { ArrowBackIcon } from "@chakra-ui/icons";
-import { Center, Wrap } from "@chakra-ui/layout";
+import { Wrap } from "@chakra-ui/layout";
 import { useRouter } from "next/navigation";
 
 export const BackButton = ({ ml = "0", mr = "0", mt = "0", mb = "0" }) => {
@@ -31,19 +31,14 @@ export const BackButton = ({ ml = "0", mr = "0", mt = "0", mb = "0" }) => {
 };
 
 export const MainInterface = ({ children }) => (
-  <Center>
-    <Wrap
-      shadow="base"
-      rounded="xl"
-      my="8"
-      justify="center"
-      spacing="4"
-      mx="4"
-      mb="2"
-      p="2"
-      maxW="8xl"
-    >
-      {children}
-    </Wrap>
-  </Center>
+  <Wrap
+    shadow="base"
+    rounded="xl"
+    justify="center"
+    spacing={[1, 2, 3, 4]}
+    m={[1, 2, 3, 4]}
+    p={[1, 2]}
+  >
+    {children}
+  </Wrap>
 );

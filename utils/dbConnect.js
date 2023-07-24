@@ -1,3 +1,4 @@
+import state from "@components/store";
 import axios from "axios";
 import * as currency from "currency.js";
 import jsPDF from "jspdf";
@@ -114,46 +115,48 @@ export const handlePut = async ({ values, url, type, toast }) => {
   }
 };
 
-export const handleDelete = async ({ deleteUrl, id, msg = true }) => {
+export const handleDelete = async ({ deleteUrl, type, toast, router }) => {
+
+
   try {
-    await fetch(`/api/${deleteUrl}`, {
+    await fetch(deleteUrl, {
       method: "DELETE",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(id),
-    }).then((res) =>
-      res.json().then((res) => {
-        if (res.ok) {
-          if (msg)
-            toast(
-              ` Deleted Successfully`,
+    })
+      .then((res) => res.json())
+      .then((res) => {
+        if (res.done) {
+          state.isDeleted = res.done;
+          toast({
+            title: "Deleted Successfully",
+            description: `${type} Deleted Successfully`,
+            status: "success",
+            duration: 2500,
+            isClosable: true,
+          });
 
-              {
-                type: toast.TYPE.SUCCESS,
-                autoClose: 2000,
-              }
-            );
+          if (router) router.back();
         } else {
-          if (msg)
-            toast(
-              ` Something went wrong, ${res.status} \n please try again`,
-
-              {
-                type: toast.TYPE.ERROR,
-                autoClose: 2000,
-              }
-            );
+          toast({
+            title: "Error",
+            description: "Something went wrong please try again",
+            status: "error",
+            duration: 3000,
+            isClosable: true,
+          });
+          state.isDeleted = false;
         }
-      })
-    );
-  } catch (error) {
-    toast(
-      ` Something went wrong, please try again`,
 
-      {
-        type: toast.TYPE.ERROR,
-        autoClose: 2500,
-      }
-    );
+      });
+  } catch (error) {
+    console.log(error);
+    toast({
+      title: "Error",
+      description: "Something went wrong please try again",
+      status: "error",
+      duration: 3000,
+      isClosable: true,
+    });
+    state.isDeleted = false;
   }
 };
 

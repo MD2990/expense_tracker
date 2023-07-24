@@ -8,7 +8,7 @@ const mongodb = require("mongodb");
 
 export default function EditEmp({ emp }) {
   const router = useRouter();
- 
+
   if (router.isFallback) {
     return <Spans />;
   }

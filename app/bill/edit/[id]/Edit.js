@@ -41,7 +41,6 @@ export default function Edit_Delete_Bill({ bill }) {
 
   async function put(values) {
     try {
-      console.log(_id);
       await handlePut({
         values,
         url: `http://localhost:3000/bill/edit/api?id=${_id}`,
@@ -50,17 +49,17 @@ export default function Edit_Delete_Bill({ bill }) {
         id: _id,
       });
       router.back();
-    } catch (error) {
-      console.log(error);
-    }
+    } catch (error) {}
   }
 
   async function FormDeleteFunc() {
+    // filter out the bill
     await handleFormDelete({
-      deleteUrl: "bill/del",
-      id: _id,
+      deleteUrl: `http://localhost:3000/bill/show/api?id=${_id}`,
+      type: "Bill",
+      toast,
       handleDelete,
-      router,
+      router: handleDelete ? router : null,
     });
   }
 
@@ -89,7 +88,7 @@ export default function Edit_Delete_Bill({ bill }) {
 
           return (
             <Form>
-              <Title title={` Update bill no. ${bill.bill_number}`} />
+              <Title title={` Update bill no. ${bill_number}`} />
               <Center>
                 <Wrap
                   maxW="55rem"

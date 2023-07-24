@@ -1,6 +1,6 @@
 "use client";
 import { Title } from "@components/comUtil/ComUtil";
-import { HStack, Divider } from "@chakra-ui/react";
+import { HStack, Divider, useToast } from "@chakra-ui/react";
 import React, { useCallback, useEffect, useMemo } from "react";
 import Paginate from "@components/comUtil/Paginate";
 import { BillButtons } from "./BillButtons";
@@ -10,8 +10,13 @@ import { useSnapshot } from "valtio";
 import state from "@components/store";
 import { handleFormDelete } from "@lib/helpers";
 import { handleDelete } from "@utils/dbConnect";
+import { useRouter } from "next/navigation";
+import { subscribeKey } from "valtio/utils";
 
 export default function ShowBills({ bill }) {
+  const router = useRouter();
+  const toast = useToast();
+
   const snap = useSnapshot(state);
   const tableHeads = useMemo(
     () => [
@@ -50,13 +55,18 @@ export default function ShowBills({ bill }) {
   async function deleteFunc({ _id }) {
     // filter out the bill
     await handleFormDelete({
-      deleteUrl: "/bill/del",
-      id: _id,
+      deleteUrl: `http://localhost:3000/bill/show/api?id=${_id}`,
+      type: "Bill",
+      toast,
       handleDelete,
     });
-    if (state.isDeleted) {
-      state.bill = state.bill.filter((b) => b._id !== _id);
-    }
+
+    subscribeKey(state, "isDeleted", (v) => {
+      if (v) {
+        router.refresh();
+      }
+    });
+
     state.isDeleted = false;
   }
 
@@ -69,7 +79,10 @@ export default function ShowBills({ bill }) {
   );
 
   useEffect(() => {
-    state.bill = bill.sort((a, b) => (a.bill_date > b.bill_date ? -1 : 1));
+    router.refresh();
+  }, [router]);
+  useEffect(() => {
+    state.bill = bill;
   }, [bill]);
   useEffect(() => {
     return () => {
@@ -84,19 +97,15 @@ export default function ShowBills({ bill }) {
       <MainInterface>
         <BillButtons data={bill} />
         <Divider mt="-8" />
-        {snap.searchResults.length ? (
-          <MyTable
-            size="sm"
-            data={rs()}
-            tableTitle="Bills"
-            tableHeads={tableHeads}
-            tableRows={tableRows}
-            editFunc={editFunc}
-            deleteFunc={deleteFunc}
-          />
-        ) : (
-          <Title title="Nothing to Show... " />
-        )}
+        <MyTable
+          size="sm"
+          data={rs()}
+          tableTitle="Bills"
+          tableHeads={tableHeads}
+          tableRows={tableRows}
+          editFunc={editFunc}
+          deleteFunc={deleteFunc}
+        />
       </MainInterface>
       <HStack mt="12" justify="center">
         <Paginate />

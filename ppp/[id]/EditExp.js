@@ -20,24 +20,21 @@ export default function EditExp({ exp }) {
   );
 }
 export async function getStaticProps({ params }) {
-
-  
-
   const { db } = await connectToDatabase();
   const data = await db
     .collection("exps")
     .findOne({ _id: mongodb.ObjectId(params.id) });
-    
-      let exp = await jsonify(data);
 
- if (!db || !data) {
-   return {
-     redirect: {
-       destination: "/",
-       permanent: false,
-     },
-   };
- }
+  let exp = await jsonify(data);
+
+  if (!db || !data) {
+    return {
+      redirect: {
+        destination: "/",
+        permanent: false,
+      },
+    };
+  }
   exp.shop_exp = exp.shop_exp.replace("OMR", "");
   exp.day_sell = exp.day_sell.replace("OMR", "");
   exp.other_exp = exp.other_exp.replace("OMR", "");
@@ -54,7 +51,6 @@ export async function getStaticProps({ params }) {
 export async function getStaticPaths() {
   const { db } = await connectToDatabase();
   const data = await db.collection("exps").find({}).toArray();
-
 
   // Get the paths we want to pre-render based on posts
   const paths = data.map((c) => ({

@@ -8,10 +8,9 @@ import {
   Th,
   Td,
   TableCaption,
-  Wrap,
-  WrapItem,
   IconButton,
   Text,
+  TableContainer,
 } from "@chakra-ui/react";
 import Link from "next/link";
 import { useSnapshot } from "valtio";
@@ -132,8 +131,8 @@ export default function MyTable({
   };
 
   return (
-    <Wrap justify={"center"} p="2" m="2" mb="4" overflowX={"auto"}>
-      <WrapItem>
+    <TableContainer>
+      
         <Table variant="striped" colorScheme="teal" size={size}>
           <TableCaption
             userSelect={"none"}
@@ -153,7 +152,7 @@ export default function MyTable({
 
           <TheTable />
         </Table>
-      </WrapItem>
-    </Wrap>
+      
+    </TableContainer>
   );
 }
