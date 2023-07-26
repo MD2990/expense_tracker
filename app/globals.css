@@ -1,26 +1,21 @@
 * {
   font-family: "Times New Roman", Times, serif;
- 
 }
 
 button {
   box-shadow: none !important;
 }
 
-span  {
-  
+span {
   box-shadow: none !important;
 }
 a:hover a:visited a:link a:focus a:active {
   text-decoration: none !important;
-  
 }
-a{
+a {
   text-decoration: none !important;
   box-shadow: none !important;
-
 }
-
 
 .pagination {
   display: flex;
@@ -58,4 +53,16 @@ a{
   color: rgb(160, 154, 165);
   border: none;
   cursor: not-allowed;
+}
+
+/* media queries */
+
+@media screen and (max-width: 600px) {
+  .pagination a {
+    flex-direction: column;
+    align-items: center;
+    font-size: 0.5rem;
+    margin: 1%;
+    padding: 0.2rem;
+  }
 }

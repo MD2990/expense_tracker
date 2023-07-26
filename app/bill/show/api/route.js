@@ -23,7 +23,6 @@ export async function GET() {
   try {
     const bill = await db.collection("bill").find().toArray();
 
-    NextResponse.headers.set("Cache-Control", "no-store");
 
     return NextResponse.json(bill);
   } catch (error) {

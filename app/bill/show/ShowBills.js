@@ -63,10 +63,9 @@ export default function ShowBills({ bill }) {
 
     subscribeKey(state, "isDeleted", (v) => {
       if (v) {
-        router.refresh();
+        state.bill = state.bill.filter((b) => b._id !== _id);
       }
     });
-
     state.isDeleted = false;
   }
 

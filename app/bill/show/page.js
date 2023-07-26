@@ -1,11 +1,12 @@
 import React from "react";
 import ShowBills from "./ShowBills";
 
-export async function getData() {
-  const res = await fetch("http://localhost:3000/bill/show/api"
- );
+export const dynamic = "force-dynamic";
+async function getData() {
+  const res = await fetch("http://localhost:3000/bill/show/api", {
+    cache: "no-store",
+  });
   const bill = await res.json();
-
   return bill;
 }
 

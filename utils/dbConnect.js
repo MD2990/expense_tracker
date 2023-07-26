@@ -148,7 +148,6 @@ export const handleDelete = async ({ deleteUrl, type, toast, router }) => {
 
       });
   } catch (error) {
-    console.log(error);
     toast({
       title: "Error",
       description: "Something went wrong please try again",
