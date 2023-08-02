@@ -2,7 +2,6 @@ import React from "react";
 import { Field } from "formik";
 import colors from "../../lib/constants";
 import { useRouter } from "next/navigation";
-
 import {
   Center,
   Box,
@@ -22,6 +21,7 @@ import {
   Textarea,
   WrapItem,
 } from "@chakra-ui/react";
+
 import { toast } from "react-toastify";
 import { AddIcon, CalendarIcon } from "@chakra-ui/icons";
 import Head from "next/head";
@@ -194,7 +194,7 @@ export function SearchInputField({ theValue, onChange }) {
   );
 }
 
-export const CustomField = ({ fieldName, labelName, type = "text" }) => {
+export const CustomField = ({ fieldName, labelName }) => {
   return (
     <WrapItem>
       <Field name={fieldName}>
@@ -213,8 +213,8 @@ export const CustomField = ({ fieldName, labelName, type = "text" }) => {
               id={fieldName}
               placeholder={labelName}
               size="lg"
-              type={(type='date' && "DD-MM-YYYY")}
-              w={type === "date" && "252px"}
+            
+        
             />
             <FormErrorMessage>{meta.error}</FormErrorMessage>
           </FormControl>
@@ -223,6 +223,45 @@ export const CustomField = ({ fieldName, labelName, type = "text" }) => {
     </WrapItem>
   );
 };
+
+export const CustomDateField = ({ fieldName, labelName }) => {
+
+  return (
+    <WrapItem>
+      <Field name={fieldName}>
+        {({ field, meta }) => {
+         
+
+          return (
+            <FormControl isInvalid={meta.touched && meta.error}>
+              <FormLabel
+                color="blackAlpha.700"
+                fontSize="larger"
+                fontWeight="bold"
+                htmlFor={fieldName}
+              >
+                {labelName}
+              </FormLabel>
+
+              <Input
+                {...field}
+                id={fieldName}
+                placeholder={labelName}
+                size="lg"
+                type={"date"}
+                pattern="\d{4}-\d{2}-\d{2}"
+           
+             
+              />
+              <FormErrorMessage>{meta.error}</FormErrorMessage>
+            </FormControl>
+          );
+        }}
+      </Field>
+    </WrapItem>
+  );
+};
+
 export const CustomTextArea = ({ fieldName, labelName }) => {
   return (
     <WrapItem>

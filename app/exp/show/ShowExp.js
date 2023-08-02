@@ -13,7 +13,7 @@ import { handleDelete } from "@utils/dbConnect";
 import { useRouter } from "next/navigation";
 import { subscribeKey } from "valtio/utils";
 
-export default function ShowBills({ bill }) {
+export default function ShowExp({ exp }) {
   const router = useRouter();
   const toast = useToast();
 

@@ -101,8 +101,8 @@ export default function Main() {
         </CustomCol>
 
         <CustomCol title={"Expenses"}>
-          <LinkPath path="/exp" text="Show Expenses" />
-          <LinkPath path="/AddExp" text="Add Expense" />
+          <LinkPath path="/exp/show" text="Show Expenses" />
+          <LinkPath path="/exp/add" text="Add Expense" />
         </CustomCol>
         <CustomCol title={"Employees"}>
           <LinkPath path="/emp" text="Show Employees" />
