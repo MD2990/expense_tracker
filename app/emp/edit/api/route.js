@@ -1,4 +1,3 @@
-import { addCurrency, toCurrency } from "@utils/dbConnect";
 import connectToDatabase from "@utils/mongodb";
 import { getDate } from "app/bill/add/api/route";
 import { NextResponse } from "next/server";
@@ -11,37 +10,17 @@ export async function PUT(request) {
     const id = searchParams.get("id");
     const data = await request.json();
 
-    let {
-      day_sell,
-      shop_exp,
-      other_exp,
-      total_sell,
-      deposed_amount,
-      exp_date,
-      notes,
-    } = data;
+    let { empl_Date } = data;
 
-    total_sell = addCurrency(day_sell, shop_exp, other_exp);
-    exp_date = getDate(exp_date);
-    day_sell = toCurrency(day_sell);
-    shop_exp = toCurrency(shop_exp);
-    other_exp = toCurrency(other_exp);
-    deposed_amount = toCurrency(deposed_amount);
-    total_sell = toCurrency(total_sell);
-
+    empl_Date = getDate(empl_Date);
     await db
-      .collection("exp")
+      .collection("emp")
       .updateOne(
         { _id: new mongodb.ObjectId(id) },
         {
           $set: {
-            day_sell,
-            shop_exp,
-            other_exp,
-            total_sell,
-            deposed_amount,
-            exp_date,
-            notes,
+            empl_Date,
+            ...data,
           },
         }
       )

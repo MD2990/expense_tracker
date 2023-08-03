@@ -3,7 +3,7 @@ import { Title } from "@components/comUtil/ComUtil";
 import { HStack, Divider, useToast } from "@chakra-ui/react";
 import React, { useCallback, useEffect, useMemo } from "react";
 import Paginate from "@components/comUtil/Paginate";
-import { BillButtons } from "./BillButtons";
+import { ExpButtons } from "./ExpButtons";
 import { MainInterface } from "@components/sharedCom/Comp";
 import MyTable from "@components/MyTable";
 import { useSnapshot } from "valtio";
@@ -18,17 +18,17 @@ export default function ShowExp({ exp }) {
   const toast = useToast();
 
   const snap = useSnapshot(state);
+
   const tableHeads = useMemo(
     () => [
       "No",
-      "company name",
-      "Bill No",
-      "Amount",
-      "Type",
-      "payment Status",
-      "notes",
-      "bill date",
-      "check date",
+      "Daily Sell",
+      "Shop Expenses",
+      "Other Expenses",
+      "Total Sell",
+      "Deposed Amount",
+      "Date",
+      "Notes",
       "edit",
       "delete",
     ],
@@ -38,14 +38,13 @@ export default function ShowExp({ exp }) {
   const tableRows = useMemo(
     () => [
       "no",
-      "company_name",
-      "bill_number",
-      "bill_amount",
-      "bill_type",
-      "payment_status",
+      "day_sell",
+      "shop_exp",
+      "other_exp",
+      "total_sell",
+      "deposed_amount",
+      "exp_date",
       "notes",
-      "bill_date",
-      "check_date",
       "edit",
       "delete",
     ],
@@ -55,23 +54,23 @@ export default function ShowExp({ exp }) {
   async function deleteFunc({ _id }) {
     const ip = process.env.NEXT_PUBLIC_IP;
 
-    // filter out the bill
+    // filter out the exp
     await handleFormDelete({
-      deleteUrl: `${ip}/bill/show/api?id=${_id}`,
-      type: "Bill",
+      deleteUrl: `${ip}/exp/show/api?id=${_id}`,
+      type: "Expense",
       toast,
       handleDelete,
     });
 
     subscribeKey(state, "isDeleted", (v) => {
       if (v) {
-        state.bill = state.bill.filter((b) => b._id !== _id);
+        state.exp = state.exp.filter((b) => b._id !== _id);
       }
     });
     state.isDeleted = false;
   }
 
-  const editFunc = (e) => `/bill/edit/${e._id}`;
+  const editFunc = (e) => `/exp/edit/${e._id}`;
   const rs = useCallback(
     // eslint-disable-next-line valtio/state-snapshot-rule
     () => snap.searchResults.slice(snap.offset, snap.offset + snap.PER_PAGE),
@@ -82,25 +81,24 @@ export default function ShowExp({ exp }) {
     router.refresh();
   }, [router]);
   useEffect(() => {
-    state.bill = bill;
-  }, [bill]);
+    state.exp = exp;
+  }, [exp]);
   useEffect(() => {
     return () => {
       state.searchTerm = "";
-      state.paymentText = "Filter by Payment";
     };
   }, []);
 
   return (
     <>
-      <Title title="Bill Details" />
+      <Title title="Expenses" />
       <MainInterface>
-        <BillButtons data={bill} />
+        <ExpButtons data={exp} />
         <Divider mt="-8" />
         <MyTable
           size="sm"
           data={rs()}
-          tableTitle="Bills"
+          tableTitle="Expenses"
           tableHeads={tableHeads}
           tableRows={tableRows}
           editFunc={editFunc}

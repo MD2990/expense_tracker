@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import connectToDatabase from "@utils/mongodb";
-import { toCurrency } from "@utils/dbConnect";
+import { addCurrency, toCurrency } from "@utils/dbConnect";
 import { format } from "date-fns";
 export const getDate = (theDate) => {
   const date = format(new Date(theDate), "yyyy-MM-dd");
@@ -12,27 +12,30 @@ export async function POST(request) {
 
     const data = await request.json();
     let {
-      company_name,
-      bill_number,
-      bill_date,
-      bill_type,
-      bill_amount,
-      payment_status,
-      check_date,
+      day_sell,
+      shop_exp,
+      other_exp,
+      total_sell,
+      deposed_amount,
+      exp_date,
       notes,
     } = data;
-    bill_date = getDate(bill_date);
-    check_date = getDate(check_date);
-    bill_amount = toCurrency(bill_amount);
 
-    await db.collection("bill").insertOne({
-      company_name,
-      bill_number,
-      bill_date,
-      bill_type,
-      bill_amount,
-      payment_status,
-      check_date,
+    total_sell = addCurrency(day_sell, shop_exp, other_exp);
+    exp_date = getDate(exp_date);
+    day_sell = toCurrency(day_sell);
+    shop_exp = toCurrency(shop_exp);
+    other_exp = toCurrency(other_exp);
+    deposed_amount = toCurrency(deposed_amount);
+    total_sell = toCurrency(total_sell);
+
+    await db.collection("exp").insertOne({
+      day_sell,
+      shop_exp,
+      other_exp,
+      total_sell,
+      deposed_amount,
+      exp_date,
       notes,
     });
 

@@ -2,40 +2,31 @@
 import React from "react";
 import {
   CustomDateField,
-  CustomDropdown,
   CustomField,
+  CustomFieldWithValue,
   CustomTextArea,
   FormBottomButton,
   Title,
 } from "@components/comUtil/ComUtil";
-import { Field, Form, Formik } from "formik";
-import { Post } from "@utils/dbConnect";
-import {
-  FormControl,
-  FormLabel,
-  FormErrorMessage,
-  Wrap,
-  Center,
-  WrapItem,
-  Switch,
-  useToast,
-} from "@chakra-ui/react";
-import { validationSchema } from "@lib/constants";
+import { Form, Formik } from "formik";
+import { addCurrency, Post } from "@utils/dbConnect";
+import { Wrap, Center, useToast } from "@chakra-ui/react";
+import { expValidationSchema } from "@lib/constants";
 import { useRouter } from "next/navigation";
 import { format } from "date-fns";
 
-export default function AddBills() {
+export default function AddExp() {
   const date = format(new Date(), "yyyy-MM-dd");
   const toast = useToast();
   const router = useRouter();
 
   async function add(values) {
     try {
-      await Post({ url: "/bill/add/api", values, toast, type: "Bill" });
+      await Post({ url: "/exp/add/api", values, toast, type: "Expense" });
     } catch (error) {
       toast({
         title: "An error occurred.",
-        description: "Unable to add bill.",
+        description: "Unable to add expense.",
         status: "error",
         duration: 3000,
         isClosable: true,
@@ -46,38 +37,28 @@ export default function AddBills() {
   return (
     <Formik
       initialValues={{
-        company_name: "",
-        bill_number: "",
-        bill_date: date,
-        bill_type: "Cash",
-        bill_amount: "",
-        payment_status: false,
-        check_date: date,
+        day_sell: 0,
+        shop_exp: 0,
+        other_exp: 0,
+        total_sell: 0,
+        deposed_amount: 0,
+        exp_date: date,
         notes: "",
       }}
       onSubmit={async (values, actions) => {
-        try {
-          actions.setSubmitting(true);
-          await add(values);
-          actions.resetForm();
-        } catch (error) {
-          toast({
-            title: "An error occurred.",
-            description: "Unable to add bill.",
-            status: "error",
-            duration: 3000,
-            isClosable: true,
-          });
-        }
+        actions.setSubmitting(true);
+        await add(values);
+        actions.resetForm();
       }}
-      validationSchema={validationSchema}
+      validationSchema={expValidationSchema}
     >
       {(props) => {
         const { values } = props;
 
         return (
           <Form>
-            <Title title="Add New Bill" />
+            <Title title="Add Expense" />
+
             <Center>
               <Wrap
                 maxW="55rem"
@@ -90,67 +71,41 @@ export default function AddBills() {
                 spacing="40px"
               >
                 <CustomField
-                  fieldName="company_name"
-                  labelName="Company Name"
+                  fieldName="day_sell"
+                  labelName="Daily Sell"
+                  type="number"
                 />
-                <CustomField fieldName="bill_number" labelName="Bill Number" />
-                <CustomDateField fieldName="bill_date" labelName="Bill Date" />
-
-                <CustomDropdown fieldName="bill_type" labelName="Bill Type">
-                  <option>Cash</option>
-                  <option>Cheque</option>
-                </CustomDropdown>
-
-                <CustomField fieldName="bill_amount" labelName="Bill Amount" />
-                <WrapItem>
-                  <Field name="payment_status">
-                    {({ field, form }) => (
-                      <FormControl
-                        shadow="base"
-                        p="2.5"
-                        pb="-2"
-                        rounded="xl"
-                        display="flex"
-                        alignItems="right"
-                        isInvalid={
-                          form.errors.payment_status &&
-                          form.touched.payment_status
-                        }
-                      >
-                        <FormLabel
-                          fontSize="larger"
-                          fontWeight="black"
-                          htmlFor="payment_status"
-                        >
-                          {values.payment_status ? "Paid" : "UnPaid"}{" "}
-                        </FormLabel>
-                        <Switch
-                          mt="1.5"
-                          colorScheme="whatsapp"
-                          {...field}
-                          id="payment_status"
-                          size="md"
-                          isChecked={values.payment_status}
-                        />
-
-                        <FormErrorMessage>
-                          {form.errors.payment_status}
-                        </FormErrorMessage>
-                      </FormControl>
-                    )}
-                  </Field>
-                </WrapItem>
-
-                <CustomDateField
-                  fieldName="check_date"
-                  labelName="Check Date"
+                <CustomField
+                  fieldName="shop_exp"
+                  labelName="Shop Expenses"
+                  type="number"
+                />
+                <CustomField
+                  fieldName="other_exp"
+                  labelName="Other Expenses"
+                  type="number"
+                />
+                <CustomFieldWithValue
+                  fieldName="total_sell"
+                  labelName="Total Sell"
+                  value={addCurrency(
+                    values.day_sell,
+                    values.shop_exp,
+                    values.other_exp
+                  )}
                 />
 
+                <CustomField
+                  fieldName="deposed_amount"
+                  labelName="Deposed Amount"
+                  type="number"
+                />
+                <CustomDateField fieldName="exp_date" labelName="Date" />
                 <CustomTextArea fieldName="notes" labelName="Notes" />
               </Wrap>
             </Center>
 
-            <FormBottomButton router={router} props={props} />
+            <FormBottomButton router={router} props={props}></FormBottomButton>
           </Form>
         );
       }}

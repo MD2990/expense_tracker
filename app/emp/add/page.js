@@ -1,6 +1,6 @@
-import AddExp from "./AddExp";
+import AddEmp from "./AddEmp";
 import React from "react";
 
 export default function page() {
-  return <AddExp />;
+  return <AddEmp />;
 }

@@ -1,14 +1,15 @@
+"use client";
 import React from "react";
 import { AddIcon, RepeatIcon } from "@chakra-ui/icons";
-import { Wrap, WrapItem } from "@chakra-ui/layout";
-import { useRouter } from "next/dist/client/router";
+import { Wrap, WrapItem } from "@chakra-ui/react";
+import { useRouter } from "next/navigation";
 import { useSnapshot } from "valtio";
-import { Btn, PrintBtn } from "../comUtil/ComUtil";
-import SearchInput from "../comUtil/SearchInput";
-import state from "../store";
-import { toPDF } from "../../utils/dbConnect";
-import TotalText from "../sharedCom/TotalText";
-import { BackButton } from "../sharedCom/Comp";
+import { Btn, PrintBtn } from "@components/comUtil/ComUtil";
+import SearchInput from "@components/comUtil/SearchInput";
+import state from "@components/store";
+import { toPDF } from "@utils/dbConnect";
+import TotalText from "@components/sharedCom/TotalText";
+import { BackButton } from "@components/sharedCom/Comp";
 
 export const EmpButtons = () => {
   const snap = useSnapshot(state);
@@ -66,7 +67,7 @@ export const EmpButtons = () => {
       <WrapItem>
         <Btn
           icon={<AddIcon />}
-          click={() => router.push("/AddEmp")}
+          click={() => router.push("/emp/add")}
           title="Add"
         />
       </WrapItem>

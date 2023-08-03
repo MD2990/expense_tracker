@@ -1,67 +1,53 @@
-
+"use client";
 import React from "react";
-import {
-  AddIcon,
-  CalendarIcon,
-  CheckCircleIcon,
-  RepeatIcon,
-  WarningTwoIcon,
-} from "@chakra-ui/icons";
-import { Wrap, WrapItem } from "@chakra-ui/layout";
- import { useRouter } from "next/navigation";
+import { AddIcon, RepeatIcon } from "@chakra-ui/icons";
+import { Wrap, WrapItem } from "@chakra-ui/react";
+import { useRouter } from "next/navigation";
 import { useSnapshot } from "valtio";
+import { toPDF } from "@utils/dbConnect";
 import { Btn, PrintBtn } from "@components/comUtil/ComUtil";
 import SearchInput from "@components/comUtil/SearchInput";
-import state from "@components/store";
-import { toPDF } from "@utils/dbConnect";
 import TotalText from "@components/sharedCom/TotalText";
+import state from "@components/store";
 import { BackButton } from "@components/sharedCom/Comp";
 
-export const BillButtons = ({ data }) => {
+export const ExpButtons = () => {
   const snap = useSnapshot(state);
+
   const router = useRouter();
+
   const clear = () => {
     state.searchTerm = "";
-
-    state.bill = data;
-    state.paidOrNotFiltered = false;
+    state.exp = state.exp;
   };
-
-  function getPaid() {
-    state.paidOrNotFiltered = true;
-    state.bill = data;
-    state.paid = !state.paid;
-    state.bill = state.bill.filter((b) => b.payment_status !== state.paid);
-  }
 
   function printPdf() {
     const rows = state.searchResults.map(
       (
         {
-          company_name,
-          bill_number,
-          bill_amount,
-          bill_type,
-          bill_date,
-          check_date,
-          payment_status,
+          _id,
+          day_sell,
+          shop_exp,
+          other_exp,
+          total_sell,
+          deposed_amount,
+          exp_date,
+
           notes,
         },
         index
       ) => {
         index += 1;
+        const id = _id.substring(16);
         const data = {
-          company_name,
-          bill_number,
-          bill_amount,
-          bill_type,
-          bill_date,
-          check_date,
+          id,
+          day_sell,
+          shop_exp,
+          other_exp,
+          total_sell,
+          deposed_amount,
+          exp_date,
           notes,
-          ...(payment_status
-            ? { payment_status: "Paid" }
-            : { payment_status: "Pending" }),
-          ...(bill_type === "Cash" ? { check_date: "N/A" } : { check_date }),
 
           index,
         };
@@ -72,35 +58,34 @@ export const BillButtons = ({ data }) => {
 
     const columns = [
       { title: "#", key: "index" },
-      { title: "Company Name", key: "company_name" },
-      { title: "bill Number", key: "bill_number" },
-      { title: "bill Amount", key: "bill_amount" },
-      { title: "bill Type", key: "bill_type" },
-      { title: "bill Date", key: "bill_date" },
-      { title: "Check Date", key: "check_date" },
-      { title: "Payment Status", key: "payment_status" },
+      { title: "ID", key: "id" },
+      { title: "Daily Sell", key: "day_sell" },
+      { title: "Shop Expenses", key: "shop_exp" },
+      { title: "Other Expenses", key: "other_exp" },
+      { title: "Total Sell", key: "total_sell" },
+      { title: "Deposed Amount", key: "deposed_amount" },
+      { title: "Date", key: "exp_date" },
       { title: "Remarks", key: "notes" },
     ];
 
-    return toPDF(rows, columns, "Bills");
+    return toPDF(rows, columns, "Expenses");
   }
   return (
-    <Wrap spacing="4" justify="center" align="center" m="2" p="2">
+    <Wrap spacing="4" justify="center" align="center" p="2" m="2">
       <WrapItem>
-        <BackButton ml="0" />
+        <BackButton />
       </WrapItem>
       <WrapItem>
-        <SearchInput data={snap.bill} />
+        <SearchInput data={snap.exp} />
       </WrapItem>
-
       <WrapItem>
-        <Btn icon={<RepeatIcon />} click={clear} title="Show All" />
+        <Btn icon={<RepeatIcon />} click={() => clear()} title="Show All" />
       </WrapItem>
       <WrapItem>
         <Btn
           icon={<AddIcon />}
-          click={() => router.push("/AddBill")}
-          title="Add"
+          click={() => router.push("/exp/add")}
+          title="Add New"
         />
       </WrapItem>
       {snap.searchResults.length > 0 && (
@@ -108,33 +93,17 @@ export const BillButtons = ({ data }) => {
           <PrintBtn click={() => printPdf()} />
         </WrapItem>
       )}
-
-      <WrapItem>
-        <Btn
-          title="Filter By Payment"
-          icon={
-            !snap.paid ? (
-              <CheckCircleIcon />
-            ) : snap.paid ? (
-              <WarningTwoIcon />
-            ) : (
-              <CalendarIcon />
-            )
-          }
-          color={
-            snap.paidOrNotFiltered
-              ? snap.paid
-                ? "turquoise"
-                : "red.400"
-              : "gray.900"
-          }
-          click={getPaid}
-        />
-      </WrapItem>
-
-      <WrapItem>
-        <TotalText text={`Total Bills: ${snap.searchResults.length}`} />
-      </WrapItem>
+      {snap.searchResults.length !== snap.exp.length ? (
+        <WrapItem>
+          <TotalText
+            text={`Results ${snap.searchResults.length} of ${snap.exp.length}`}
+          />
+        </WrapItem>
+      ) : (
+        <WrapItem>
+          <TotalText text={`Total Expenses: ${snap.exp.length}`} />
+        </WrapItem>
+      )}
     </Wrap>
   );
 };

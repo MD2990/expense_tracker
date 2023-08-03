@@ -7,7 +7,7 @@ export async function DELETE(request) {
     const { searchParams } = new URL(request.url);
     const id = searchParams.get("id");
 
-    const res = await db.collection("exp").deleteOne({
+    const res = await db.collection("emp").deleteOne({
       _id: new mongodb.ObjectId(id),
     });
 
@@ -21,13 +21,13 @@ export async function DELETE(request) {
 
 export async function GET() {
   try {
-    const exp = await db
-      .collection("exp")
+    const emp = await db
+      .collection("emp")
       .find()
-      .sort({ exp_date: -1 })
+      .sort({ emp_name: -1 })
       .toArray();
 
-    return NextResponse.json(exp);
+    return NextResponse.json(emp);
   } catch (error) {
     return NextResponse.error(error.message);
   }

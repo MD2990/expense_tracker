@@ -1,22 +1,36 @@
+"use client";
 import React from "react";
 import {
+  CustomDateField,
   CustomField,
   CustomTextArea,
   FormBottomButton,
   Title,
-} from "../comUtil/ComUtil";
+} from "@components/comUtil/ComUtil";
 import { Form, Formik } from "formik";
-import { Post } from "../../utils/dbConnect";
+import { Post } from "@utils/dbConnect";
+import { Wrap, Center, useToast } from "@chakra-ui/react";
+import { empValidationSchema } from "@lib/constants";
 import { useRouter } from "next/navigation";
-import { Wrap, Center } from "@chakra-ui/react";
-import { empValidationSchema } from "../../lib/constants";
-import { today } from "../../lib/helpers";
+import { format } from "date-fns";
 
-export default function Add() {
+export default function AddEmp() {
+  const date = format(new Date(), "yyyy-MM-dd");
+  const toast = useToast();
   const router = useRouter();
 
-  async function addEmp(values) {
-    await Post({ url: "emp/add", values });
+  async function add(values) {
+    try {
+      await Post({ url: "/emp/add/api", values, toast, type: "Employee" });
+    } catch (error) {
+      toast({
+        title: "An error occurred.",
+        description: "Unable to add employee.",
+        status: "error",
+        duration: 3000,
+        isClosable: true,
+      });
+    }
   }
 
   return (
@@ -26,11 +40,11 @@ export default function Add() {
         job: "",
         civil_id: "",
         passport_number: "",
-        empl_Date: today(),
+        empl_Date: date,
         notes: "No Notes",
       }}
       onSubmit={async (values, actions) => {
-        await addEmp(values);
+        await add(values);
         actions.setSubmitting(false);
         actions.resetForm();
       }}
@@ -61,10 +75,9 @@ export default function Add() {
                     fieldName="passport_number"
                     labelName="Passport Number"
                   />
-                  <CustomField
+                  <CustomDateField
                     fieldName="empl_Date"
                     labelName="Employment Date"
-                    type="date"
                   />
                   <CustomTextArea fieldName="notes" labelName="Notes" />
                 </Wrap>

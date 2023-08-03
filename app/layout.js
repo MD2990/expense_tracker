@@ -1,7 +1,7 @@
 import { Providers } from "./providers";
 import "./globals.css";
 import React from "react";
-import Navigation from "./Nav";
+import Navigation from "./Navigation";
 
 export default function RootLayout({ children }) {
   return (
@@ -9,6 +9,7 @@ export default function RootLayout({ children }) {
       <body suppressHydrationWarning={true}>
         <Providers>
           <Navigation />
+
           {children}
         </Providers>
       </body>

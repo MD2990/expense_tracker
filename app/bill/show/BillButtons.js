@@ -1,4 +1,4 @@
-
+"use client";
 import React from "react";
 import {
   AddIcon,
@@ -7,8 +7,8 @@ import {
   RepeatIcon,
   WarningTwoIcon,
 } from "@chakra-ui/icons";
-import { Wrap, WrapItem } from "@chakra-ui/layout";
- import { useRouter } from "next/navigation";
+import { Wrap, WrapItem } from "@chakra-ui/react";
+import { useRouter } from "next/navigation";
 import { useSnapshot } from "valtio";
 import { Btn, PrintBtn } from "@components/comUtil/ComUtil";
 import SearchInput from "@components/comUtil/SearchInput";

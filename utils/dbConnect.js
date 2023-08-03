@@ -1,6 +1,7 @@
+
 import state from "@components/store";
 import axios from "axios";
-import * as currency from "currency.js";
+import currency from "currency.js";
 import jsPDF from "jspdf";
 import "jspdf-autotable";
 
@@ -116,8 +117,6 @@ export const handlePut = async ({ values, url, type, toast }) => {
 };
 
 export const handleDelete = async ({ deleteUrl, type, toast, router }) => {
-
-
   try {
     await fetch(deleteUrl, {
       method: "DELETE",
@@ -145,7 +144,6 @@ export const handleDelete = async ({ deleteUrl, type, toast, router }) => {
           });
           state.isDeleted = false;
         }
-
       });
   } catch (error) {
     toast({

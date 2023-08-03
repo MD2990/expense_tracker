@@ -1,44 +1,33 @@
 "use client";
 import React from "react";
 import {
-  CustomDateField,
-  CustomDropdown,
   CustomField,
+  CustomFieldWithValue,
   CustomTextArea,
   FormBottomButton,
   Title,
 } from "@components/comUtil/ComUtil";
-import { Field, Form, Formik } from "formik";
-import {
-  FormControl,
-  FormLabel,
-  FormErrorMessage,
-  Wrap,
-  Center,
-  WrapItem,
-  Switch,
-  useToast,
-} from "@chakra-ui/react";
-import { handleDelete, handlePut } from "@utils/dbConnect";
+import { Form, Formik } from "formik";
+import { Wrap, Center, useToast } from "@chakra-ui/react";
+import { addCurrency, handleDelete, handlePut } from "@utils/dbConnect";
 import { useRouter } from "next/navigation";
 import { handleFormDelete } from "@lib/helpers";
-import { validationSchema } from "@lib/constants";
+import { expValidationSchema } from "@lib/constants";
 
-export default function Edit_Delete_Bill({ bill }) {
+export default function Edit({ exp }) {
   const router = useRouter();
   const toast = useToast();
 
   const {
     _id,
-    company_name,
-    bill_number,
-    bill_date,
-    bill_type,
-    bill_amount,
-    payment_status,
-    check_date,
+    day_sell,
+    shop_exp,
+    other_exp,
+    total_sell,
+    deposed_amount,
+    exp_date,
     notes,
-  } = bill || {};
+  } = exp || {};
 
   async function put(values) {
     try {
@@ -46,8 +35,8 @@ export default function Edit_Delete_Bill({ bill }) {
       const ip = process.env.NEXT_PUBLIC_IP;
       await handlePut({
         values,
-        url: `${ip}/bill/edit/api?id=${_id}`,
-        type: `Bill No. ${bill_number} `,
+        url: `${ip}/exp/edit/api?id=${_id}`,
+        type: `Expense No. ${_id.substring(16)} `,
         toast,
         id: _id,
       });
@@ -58,10 +47,10 @@ export default function Edit_Delete_Bill({ bill }) {
   async function FormDeleteFunc() {
     const ip = process.env.NEXT_PUBLIC_IP;
 
-    // filter out the bill
+    // filter out the exp
     await handleFormDelete({
-      deleteUrl: `${ip}/bill/show/api?id=${_id}`,
-      type: "Bill",
+      deleteUrl: `${ip}/exp/show/api?id=${_id}`,
+      type: "Expense",
       toast,
       handleDelete,
       router: handleDelete ? router : null,
@@ -69,121 +58,74 @@ export default function Edit_Delete_Bill({ bill }) {
   }
 
   return (
-    <>
-      <Formik
-        initialValues={{
-          _id,
-          company_name,
-          bill_number,
-          bill_date,
-          bill_type,
-          bill_amount,
-          payment_status,
-          check_date,
-          notes,
-        }}
-        onSubmit={async (values, actions) => {
-          await put(values);
-          actions.setSubmitting(false);
-        }}
-        validationSchema={validationSchema}
-      >
-        {(props) => {
-          const { values } = props;
+    <Formik
+      initialValues={{
+        day_sell,
+        shop_exp,
+        other_exp,
+        total_sell,
+        deposed_amount,
+        exp_date,
+        notes,
+      }}
+      onSubmit={async (values, actions) => {
+        actions.setSubmitting(true);
 
-          return (
-            <Form>
-              <Title title={` Update bill no. ${bill_number}`} />
-              <Center>
-                <Wrap
-                  maxW="55rem"
-                  shadow="dark-lg"
-                  rounded="lg"
-                  p="4"
-                  m="4"
-                  justify="left"
-                  align="flex-end"
-                  spacing="40px"
-                >
-                  <CustomField
-                    fieldName="company_name"
-                    labelName="Company Name"
-                  />
-                  <CustomField
-                    fieldName="bill_number"
-                    labelName="Bill Number"
-                  />
-                  <CustomDateField
-                    fieldName="bill_date"
-                    labelName="Bill Date"
-                  />
+        await put(values);
+      }}
+      validationSchema={expValidationSchema}
+    >
+      {(props) => {
+        const { values } = props;
 
-                  <CustomDropdown fieldName="bill_type" labelName="Bill Type">
-                    <option>Cash</option>
-                    <option>Cheque</option>
-                  </CustomDropdown>
+        return (
+          <Form>
+            <Title title={`Edit Expense No. ${_id.substring(16)}`} />
+            <Center>
+              <Wrap
+                maxW="55rem"
+                shadow="dark-lg"
+                rounded="lg"
+                p="4"
+                m="4"
+                justify="left"
+                align="flex-end"
+                spacing="40px"
+              >
+                <CustomField fieldName="day_sell" labelName="Daily Sell" />
+                <CustomField fieldName="shop_exp" labelName="Shop Expenses" />
+                <CustomField fieldName="other_exp" labelName="Other Expenses" />
+                <CustomFieldWithValue
+                  fieldName="total_sell"
+                  labelName="Total Sell"
+                  value={addCurrency(
+                    values.day_sell,
+                    values.shop_exp,
+                    values.other_exp
+                  )}
+                />
 
-                  <CustomField
-                    fieldName="bill_amount"
-                    labelName="Bill Amount"
-                  />
-                  <WrapItem>
-                    <Field name="payment_status">
-                      {({ field, form }) => (
-                        <FormControl
-                          shadow="base"
-                          p="2.5"
-                          pb="-2"
-                          rounded="xl"
-                          display="flex"
-                          alignItems="right"
-                          isInvalid={
-                            form.errors.payment_status &&
-                            form.touched.payment_status
-                          }
-                        >
-                          <FormLabel
-                            fontSize="larger"
-                            fontWeight="black"
-                            htmlFor="payment_status"
-                          >
-                            {values.payment_status ? "Paid" : "UnPaid"}{" "}
-                          </FormLabel>
-                          <Switch
-                            mt="1.5"
-                            colorScheme="whatsapp"
-                            {...field}
-                            id="payment_status"
-                            size="md"
-                            isChecked={values.payment_status}
-                          />
-
-                          <FormErrorMessage>
-                            {form.errors.payment_status}
-                          </FormErrorMessage>
-                        </FormControl>
-                      )}
-                    </Field>
-                  </WrapItem>
-
-                  <CustomDateField
-                    fieldName="check_date"
-                    labelName="Check Date"
-                  />
-                  <CustomTextArea fieldName="notes" labelName="Notes" />
-                </Wrap>
-              </Center>
-
-              <FormBottomButton
-                router={router}
-                props={props}
-                deleteBtn={true}
-                deleteFunc={FormDeleteFunc}
-              ></FormBottomButton>
-            </Form>
-          );
-        }}
-      </Formik>
-    </>
+                <CustomField
+                  fieldName="deposed_amount"
+                  labelName="Deposed Amount"
+                />
+                <CustomField
+                  fieldName="exp_date"
+                  labelName="Date"
+                  type="date"
+                />
+                <CustomTextArea fieldName="notes" labelName="Notes" />
+              </Wrap>
+            </Center>
+            <FormBottomButton
+              router={router}
+              props={props}
+              deleteBtn={true}
+              deleteFunc={FormDeleteFunc}
+            ></FormBottomButton>
+          </Form>
+        );
+      }}
+    </Formik>
   );
 }

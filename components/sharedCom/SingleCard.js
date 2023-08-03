@@ -13,7 +13,7 @@ import {
   HStack,
 } from "@chakra-ui/react";
 import { Tooltip } from "@chakra-ui/react";
-import { useRouter } from "next/dist/client/router";
+import { useRouter } from "next/navigation";
 import React from "react";
 import { AiOutlineEdit } from "react-icons/ai";
 import { IconButton } from "@chakra-ui/react";

@@ -22,66 +22,83 @@ import {
   ViewIcon,
 } from "@chakra-ui/icons";
 import colors from "../lib/constants";
-import { SiHomeassistant } from "react-icons/si";
 import React from "react";
+import { usePathname } from "next/navigation";
 export default function Navigation() {
   const { isOpen, onToggle } = useDisclosure();
 
+  // get current path if its home page then don't show navigation
+  const path = usePathname();
+
   return (
-    <Box>
-      <Flex
-        bg={colors.c3}
-        minH={"50px"}
-        py={{ base: 2 }}
-        px={{ base: 4 }}
-        align={"center"}
-      >
-        <Flex
-          flex={{ base: 1, md: "auto" }}
-          ml={{ base: -2 }}
-          display={{ base: "flex", md: "none" }}
-        >
-          <IconButton
-            fontSize={["xs", "sm", "md"]}
-            onClick={onToggle}
-            icon={isOpen ? <CloseIcon /> : <HamburgerIcon />}
-            variant={"ghost"}
-            aria-label={"Toggle Navigation"}
-          />
-        </Flex>
-        <Flex flex={{ base: 3 }} justify={"flex-start"}>
-          <Link href="/">
-            <Box
-              align="center"
-              justify={"flex-start"}
-              alignSelf="center"
-              alignContent={"flex-start"}
-              alignItems={"flex-start"}
-              m="auto"
-              justifyContent={"flex-start"}
-              justifySelf="flex-start"
-              p="1"
-              fontSize={["xl", "2xl", "4xl"]}
-            >
-              <SiHomeassistant color="white" />
-            </Box>
-          </Link>
-
+    <>
+      {path === "/" ? (
+        <></>
+      ) : (
+        <Box>
           <Flex
-            display={{ base: "none", md: "flex" }}
-            align="center"
-            m="auto"
-            p="1"
+            bg={colors.c3}
+            minH={"50px"}
+            py={{ base: 2 }}
+            px={{ base: 4 }}
+            align={"center"}
           >
-            <DesktopNav />
-          </Flex>
-        </Flex>
-      </Flex>
+            <Flex
+              flex={{ base: 1, md: "auto" }}
+              ml={{ base: -2 }}
+              display={{ base: "flex", md: "none" }}
+            >
+              <IconButton
+                fontSize={["xs", "sm", "md"]}
+                onClick={onToggle}
+                icon={isOpen ? <CloseIcon /> : <HamburgerIcon />}
+                variant={"ghost"}
+                aria-label={"Toggle Navigation"}
+              />
+            </Flex>
+            <Flex flex={{ base: 3 }} justify={"flex-start"}>
+              <Link href="/">
+                <Text
+                  align="left"
+                  justify={"flex-start"}
+                  alignSelf="center"
+                  alignContent={"flex-start"}
+                  alignItems={"flex-start"}
+                  p="1"
+                  fontSize={["sm", "md", "xl", "2xl", "4xl"]}
+                  noOfLines={1}
+                  fontWeight={900}
+                  color="whiteAlpha.900"
+                  transition={"all 1s ease"}
+                  transitionProperty="all"
+                  transitionDuration="1s"
+                  transitionTimingFunction="ease"
+                  _hover={{
+                    textDecoration: "none",
+                    color: colors.c2,
+                  }}
+                >
+                  Muscat Shopping Center
+                </Text>
+              </Link>
 
-      <Collapse in={isOpen} animateOpacity>
-        <MobileNav />
-      </Collapse>
-    </Box>
+              <Flex
+                display={{ base: "none", md: "flex" }}
+                align="center"
+                m="auto"
+                p="1"
+              >
+                <DesktopNav />
+              </Flex>
+            </Flex>
+          </Flex>
+
+          <Collapse in={isOpen} animateOpacity>
+            <MobileNav />
+          </Collapse>
+        </Box>
+      )}
+    </>
   );
 }
 
@@ -216,11 +233,11 @@ const NAV_ITEMS = [
       {
         label: "Add Bill",
         icon: <AddIcon {...iconColor} />,
-        href: "/AddBill",
+        href: "/bill/add",
       },
       {
         label: "Show Bills",
-        href: "/bill",
+        href: "/bill/show",
         icon: <ExternalLinkIcon {...iconColor} />,
       },
     ],
@@ -232,11 +249,11 @@ const NAV_ITEMS = [
       {
         label: "Add Expenses",
         icon: <ViewIcon {...iconColor} />,
-        href: "/AddExp",
+        href: "/exp/add",
       },
       {
         label: "Show",
-        href: "/exp",
+        href: "/exp/show",
         icon: <ExternalLinkIcon {...iconColor} />,
       },
     ],
@@ -247,11 +264,11 @@ const NAV_ITEMS = [
       {
         label: "Add Employee",
         icon: <AddIcon {...iconColor} />,
-        href: "/AddEmp",
+        href: "/emp/add",
       },
       {
         label: "Show Employees",
-        href: "/emp",
+        href: "/emp/show",
         icon: <ExternalLinkIcon {...iconColor} />,
       },
     ],

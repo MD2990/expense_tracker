@@ -1,25 +1,30 @@
-import { EmpButtons } from "./EmpButtons";
-import { Title } from "../comUtil/ComUtil";
-import { HStack, Divider } from "@chakra-ui/react";
+"use client";
+import { Title } from "@components/comUtil/ComUtil";
+import { HStack, Divider, useToast } from "@chakra-ui/react";
 import React, { useCallback, useEffect, useMemo } from "react";
-import Paginate from "../comUtil/Paginate";
-import { MainInterface } from "../sharedCom/Comp";
+import Paginate from "@components/comUtil/Paginate";
+import { EmpButtons } from "./EmpButtons";
+import { MainInterface } from "@components/sharedCom/Comp";
+import MyTable from "@components/MyTable";
 import { useSnapshot } from "valtio";
-import state from "../store";
-import { handleFormDelete } from "../../lib/helpers";
-import { handleDelete } from "../../utils/dbConnect";
-import MyTable from "../MyTable";
+import state from "@components/store";
+import { handleFormDelete } from "@lib/helpers";
+import { handleDelete } from "@utils/dbConnect";
+import { useRouter } from "next/navigation";
+import { subscribeKey } from "valtio/utils";
 
-export default function ShowEmps({ emp }) {
+export default function ShowEmp({ emp }) {
+  const router = useRouter();
+  const toast = useToast();
+
   const snap = useSnapshot(state);
-
   const tableHeads = useMemo(
     () => [
       "No",
       "Name",
-      " Passport No.",
-      " Civil ID",
-      " Job",
+      "Passport No.",
+      "Civil ID",
+      "Job",
       "Employment Date",
       "Notes",
       "edit",
@@ -42,22 +47,26 @@ export default function ShowEmps({ emp }) {
     ],
     []
   );
-
   async function deleteFunc({ _id }) {
+    const ip = process.env.NEXT_PUBLIC_IP;
+
     // filter out the emp
     await handleFormDelete({
-      deleteUrl: "/emp/del",
-      id: _id,
+      deleteUrl: `${ip}/emp/show/api?id=${_id}`,
+      type: "Employee",
+      toast,
       handleDelete,
     });
-    if (state.isDeleted) {
-      state.emp = state.emp.filter((b) => b._id !== _id);
-    }
+
+    subscribeKey(state, "isDeleted", (v) => {
+      if (v) {
+        state.emp = state.emp.filter((b) => b._id !== _id);
+      }
+    });
     state.isDeleted = false;
   }
 
-  const editFunc = (e) => `/${e._id}/EditEmp`;
-
+  const editFunc = (e) => `/emp/edit/${e._id}`;
   const rs = useCallback(
     // eslint-disable-next-line valtio/state-snapshot-rule
     () => snap.searchResults.slice(snap.offset, snap.offset + snap.PER_PAGE),
@@ -65,10 +74,15 @@ export default function ShowEmps({ emp }) {
   );
 
   useEffect(() => {
-    state.emp = emp.sort((a, b) => (a.empl_Date > b.empl_Date ? -1 : 1));
+    router.refresh();
+  }, [router]);
+  useEffect(() => {
+    state.emp = emp;
   }, [emp]);
   useEffect(() => {
-    return () => (state.searchTerm = "");
+    return () => {
+      state.searchTerm = "";
+    };
   }, []);
 
   return (

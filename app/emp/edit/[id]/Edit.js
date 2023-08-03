@@ -1,38 +1,53 @@
+"use client";
 import React from "react";
 import {
+  CustomDateField,
   CustomField,
   CustomTextArea,
   FormBottomButton,
   Title,
-} from "../comUtil/ComUtil";
+} from "@components/comUtil/ComUtil";
 import { Form, Formik } from "formik";
-import { handlePut, handleDelete } from "../../utils/dbConnect";
+import { Wrap, Center, useToast } from "@chakra-ui/react";
+import { handleDelete, handlePut } from "@utils/dbConnect";
 import { useRouter } from "next/navigation";
+import { handleFormDelete } from "@lib/helpers";
+import { empValidationSchema } from "@lib/constants";
 
-import { Wrap, Center } from "@chakra-ui/react";
-import { empValidationSchema } from "../../lib/constants";
-import { handleFormDelete } from "../../lib/helpers";
-
-export default function Edit_Delete_Emp({ emp }) {
+export default function Edit({ emp }) {
+  const router = useRouter();
+  const toast = useToast();
   const { _id, emp_name, job, civil_id, passport_number, empl_Date, notes } =
     emp;
-  const router = useRouter();
 
-  async function editEmp(values) {
-    await handlePut({ url: "emp/update", values, router });
-
-    router.back();
+  async function put(values) {
+    try {
+      // get env variable
+      const ip = process.env.NEXT_PUBLIC_IP;
+      await handlePut({
+        values,
+        url: `${ip}/emp/edit/api?id=${_id}`,
+        type: `${emp_name} `,
+        toast,
+        id: _id,
+      });
+      router.back();
+    } catch (error) {}
   }
 
   async function FormDeleteFunc() {
-    await handleFormDelete({
-      deleteUrl: "emp/del",
-      id: _id,
-      router,
+    const ip = process.env.NEXT_PUBLIC_IP;
 
+    // filter out the emp
+    await handleFormDelete({
+      deleteUrl: `${ip}/emp/show/api?id=${_id}`,
+      type: "Employee",
+      toast,
       handleDelete,
+      router: handleDelete ? router : null,
     });
   }
+
   return (
     <Formik
       initialValues={{
@@ -45,7 +60,7 @@ export default function Edit_Delete_Emp({ emp }) {
       }}
       onSubmit={async (values, actions) => {
         actions.setSubmitting(true);
-        await editEmp(values);
+        await put(values);
       }}
       validationSchema={empValidationSchema}
     >
@@ -74,10 +89,9 @@ export default function Edit_Delete_Emp({ emp }) {
                     fieldName="passport_number"
                     labelName="Passport Number"
                   />
-                  <CustomField
+                  <CustomDateField
                     fieldName="empl_Date"
                     labelName="Employment Date"
-                    type="date"
                   />
                   <CustomTextArea fieldName="notes" labelName="Notes" />
                 </Wrap>

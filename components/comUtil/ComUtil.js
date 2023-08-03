@@ -1,6 +1,7 @@
+"use client";
 import React from "react";
 import { Field } from "formik";
-import colors from "../../lib/constants";
+import colors from "@lib/constants";
 import { useRouter } from "next/navigation";
 import {
   Center,
@@ -21,11 +22,10 @@ import {
   Textarea,
   WrapItem,
 } from "@chakra-ui/react";
-
 import { toast } from "react-toastify";
 import { AddIcon, CalendarIcon } from "@chakra-ui/icons";
 import Head from "next/head";
-import { BackButton } from "../sharedCom/Comp";
+import { BackButton } from "@components/sharedCom/Comp";
 
 export function HD({ text }) {
   return (
