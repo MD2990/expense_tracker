@@ -17,6 +17,6 @@ export default function RootLayout({ children }) {
   );
 }
 export const metadata = {
-  title: "Dashboard",
+  title: "Muscat Shopping Center",
   description: "Apps made by Majid Ahmed",
 };
