@@ -16,8 +16,8 @@ export async function getById({ id, collection }) {
 
 export async function getData(url) {
   try {
-    const ip = process.env.VERCEL_URL;
-    const res = await fetch(ip+url, { cache: "no-store" });
+    const ip = process.env.NEXT_PUBLIC_VERCEL_URL;
+    const res = await fetch(ip + url, { cache: "no-store" });
     const data = await res.json();
     return data;
   } catch (error) {
@@ -25,7 +25,7 @@ export async function getData(url) {
   }
 }
 
- export async function deleteById({ id, collection }) {
+export async function deleteById({ id, collection }) {
   try {
     const response = await db.collection(collection).deleteOne({
       _id: mongodb.ObjectId(id),
@@ -36,4 +36,4 @@ export async function getData(url) {
   } catch (error) {
     throw new Error(error.message);
   }
-} 
+}

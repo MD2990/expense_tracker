@@ -23,7 +23,7 @@ export default function Edit({ emp }) {
   async function put(values) {
     try {
       // get env variable
-      const ip = process.env.VERCEL_URL;
+      const ip = process.env.NEXT_PUBLIC_VERCEL_URL;
       await handlePut({
         values,
         url: `${ip}/emp/edit/api?id=${_id}`,
@@ -36,7 +36,7 @@ export default function Edit({ emp }) {
   }
 
   async function FormDeleteFunc() {
-    const ip = process.env.VERCEL_URL;
+    const ip = process.env.NEXT_PUBLIC_VERCEL_URL;
 
     // filter out the emp
     await handleFormDelete({

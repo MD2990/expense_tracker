@@ -53,7 +53,7 @@ export default function ShowBills({ bill }) {
   );
 
   async function deleteFunc({ _id }) {
-    const ip = process.env.VERCEL_URL;
+    const ip = process.env.NEXT_PUBLIC_VERCEL_URL;
 
     // filter out the bill
     await handleFormDelete({
