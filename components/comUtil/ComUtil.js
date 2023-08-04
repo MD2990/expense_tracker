@@ -22,7 +22,6 @@ import {
   Textarea,
   WrapItem,
 } from "@chakra-ui/react";
-import { toast } from "react-toastify";
 import { AddIcon, CalendarIcon } from "@chakra-ui/icons";
 import Head from "next/head";
 import { BackButton } from "@components/sharedCom/Comp";
@@ -121,21 +120,8 @@ export function Spans() {
   );
 }
 
-export function SucToast({ msg = "Updated Successfully", duration = 2000 }) {
-  toast(msg, {
-    type: toast.TYPE.SUCCESS,
-    autoClose: duration,
-  });
-}
-export function ErrorToast({
-  msg = "Sorry, there was an error, please try again later",
-  duration = 3500,
-}) {
-  toast(msg, {
-    type: toast.TYPE.ERROR,
-    autoClose: duration,
-  });
-}
+
+
 
 export function MySkeletons() {
   const colors = { startColor: "gray.50", endColor: "gray.300" };
