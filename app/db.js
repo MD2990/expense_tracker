@@ -16,7 +16,7 @@ export async function getById({ id, collection }) {
 
 export async function getData(url) {
   try {
-    const ip = process.env.NEXT_PUBLIC_IP;
+    const ip = process.env.VERCEL_URL;
     const res = await fetch(ip+url, { cache: "no-store" });
     const data = await res.json();
     return data;
