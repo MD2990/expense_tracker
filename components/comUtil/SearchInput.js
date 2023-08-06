@@ -1,8 +1,8 @@
 import React, { useEffect } from "react";
 import { useSnapshot } from "valtio";
-import state from "../store";
+import state from "@components/store";
+import { myFilter } from "@lib/helpers";
 import { SearchInputField } from "./ComUtil";
-import { myFilter } from "../../lib/helpers";
 
 export default function SearchInput({ data }) {
   const snap = useSnapshot(state);

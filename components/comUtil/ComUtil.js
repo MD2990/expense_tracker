@@ -2,7 +2,6 @@
 import React from "react";
 import { Field } from "formik";
 import colors from "@lib/constants";
-import { useRouter } from "next/navigation";
 import {
   Center,
   Box,
@@ -14,7 +13,6 @@ import {
   Skeleton,
   SkeletonCircle,
   SkeletonText,
-  Spinner,
   Text,
   Wrap,
   FormControl,
@@ -22,9 +20,8 @@ import {
   Textarea,
   WrapItem,
 } from "@chakra-ui/react";
-import { AddIcon, CalendarIcon } from "@chakra-ui/icons";
+import { CalendarIcon } from "@chakra-ui/icons";
 import Head from "next/head";
-import { BackButton } from "@components/sharedCom/Comp";
 
 export function HD({ text }) {
   return (
@@ -45,7 +42,7 @@ export function Title({ title, mt = "8%", children }) {
           textAlign="center"
           noOfLines={1}
           whiteSpace="break-spaces"
-          fontSize={["md", "lg", "2xl", "3xl"]}
+          fontSize={["xs", "md", "lg", "2xl", "3xl"]}
           fontFamily="initial"
           color={colors.c3}
           fontWeight={"black"}
@@ -106,23 +103,6 @@ export function Btn({ click, title, icon, color = "blackAlpha" }) {
   );
 }
 
-export function Spans() {
-  return (
-    <Center mt={200}>
-      <Spinner
-        thickness="4px"
-        speed="0.65s"
-        emptyColor="gray.200"
-        color="teal"
-        size="xl"
-      />
-    </Center>
-  );
-}
-
-
-
-
 export function MySkeletons() {
   const colors = { startColor: "gray.50", endColor: "gray.300" };
   const Skeletons = () => (
@@ -169,13 +149,14 @@ export function SearchInputField({ theValue, onChange }) {
       focusBorderColor="gray.400"
       mx="8"
       my="4"
-      fontSize={["sm", "md", "lg", "xl"]}
+      fontSize={["xs", "sm", "md", "lg"]}
       textAlign="center"
-      size="lg"
+      size={["xs", "sm", "md", "lg"]}
       rounded="full"
       placeholder="Search by any field"
       value={theValue}
       onChange={onChange}
+      noOfLines={1}
     />
   );
 }
@@ -199,8 +180,6 @@ export const CustomField = ({ fieldName, labelName }) => {
               id={fieldName}
               placeholder={labelName}
               size="lg"
-            
-        
             />
             <FormErrorMessage>{meta.error}</FormErrorMessage>
           </FormControl>
@@ -211,13 +190,10 @@ export const CustomField = ({ fieldName, labelName }) => {
 };
 
 export const CustomDateField = ({ fieldName, labelName }) => {
-
   return (
     <WrapItem>
       <Field name={fieldName}>
         {({ field, meta }) => {
-         
-
           return (
             <FormControl isInvalid={meta.touched && meta.error}>
               <FormLabel
@@ -236,8 +212,6 @@ export const CustomDateField = ({ fieldName, labelName }) => {
                 size="lg"
                 type={"date"}
                 pattern="\d{4}-\d{2}-\d{2}"
-           
-             
               />
               <FormErrorMessage>{meta.error}</FormErrorMessage>
             </FormControl>
@@ -396,25 +370,5 @@ export const CustomFieldWithValue = ({
         )}
       </Field>
     </WrapItem>
-  );
-};
-
-export const NothingFound = ({ title, link }) => {
-  const router = useRouter();
-
-  return (
-    <>
-      <Title title={title} />
-
-      <Wrap spacing="4" justify="center" align="center" m="2" p="2">
-        <WrapItem>
-          <BackButton ml="0" />
-        </WrapItem>
-
-        <WrapItem>
-          <Btn icon={<AddIcon />} click={() => router.push(link)} title="Add" />
-        </WrapItem>
-      </Wrap>
-    </>
   );
 };

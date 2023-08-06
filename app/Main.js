@@ -94,6 +94,11 @@ export default function Main() {
         justify="center"
         align="center"
         p={[1, 2, 3, 4]}
+        direction={["column", "column", "row"]}
+        transition={"all 0.4s ease-in-out"}
+        transitionProperty={"all"}
+        transitionDuration={"normal"}
+        transitionTimingFunction={"ease-in-out"}
       >
         <CustomCol title={"Bills"}>
           <LinkPath path="/bill/show" text="Show Bills" />

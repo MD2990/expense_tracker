@@ -49,6 +49,7 @@ export default function MyTable({
             <Tr key={t._id}>
               {tableRows.map((e, i) => (
                 <Td
+                  p={[0, 0, 2, 3]}
                   key={i}
                   textAlign={"center"}
                   fontSize={["xx-small", "xs", "sm", "md"]}
@@ -132,27 +133,25 @@ export default function MyTable({
 
   return (
     <TableContainer>
-      
-        <Table variant="striped" colorScheme="teal" size={size}>
-          <TableCaption
-            userSelect={"none"}
-            placement="top"
-            fontSize={["xl", "2xl", "3xl", "5xl"]}
+      <Table variant="striped" colorScheme="teal" size={size}>
+        <TableCaption
+          userSelect={"none"}
+          placement="top"
+          fontSize={["sm", "xl", "3xl", "5xl"]}
+          textDecoration="underline"
+          textShadow={`0px 0px 10px #d0d9d2`}
+        >
+          <Text
+            as={"span"}
             textDecoration="underline"
-            textShadow={`0px 0px 10px #d0d9d2`}
+            fontSize={["sm", "md", "2xl", "3xl", "4xl"]}
           >
-            <Text
-              as={"span"}
-              textDecoration="underline"
-              fontSize={["2xl", "3xl", "4xl"]}
-            >
-              {tableTitle}
-            </Text>
-          </TableCaption>
+            {tableTitle}
+          </Text>
+        </TableCaption>
 
-          <TheTable />
-        </Table>
-      
+        <TheTable />
+      </Table>
     </TableContainer>
   );
 }
